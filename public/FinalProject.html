@@ -1,0 +1,538 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2021-10-24 Sun 20:47 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Coupled harmonic oscillators</title>
+<meta name="author" content="Juan David Salcedo Hernández" />
+<meta name="generator" content="Org Mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="src/readtheorg_theme/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="src/readtheorg_theme/css/readtheorg.css"/>
+<script type="text/javascript" src="src/lib/js/jquery.min.js"></script>
+<script type="text/javascript" src="src/lib/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="src/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript" src="src/readtheorg_theme/js/readtheorg.js"></script>
+<script type="text/javascript">
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
+<!--/*--><![CDATA[/*><!--*/
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Coupled harmonic oscillators</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orge37ad89">1. \(N\) coupled harmonic oscillators: Normal modes</a></li>
+</ul>
+</div>
+</div>
+<div class="org-src-container">
+<pre class="src src-ipython">%config InlineBackend.figure_format = <span style="color: #f1fa8c;">'svg'</span>
+
+<span style="color: #ff79c6;">import</span> numpy <span style="color: #ff79c6;">as</span> np
+<span style="color: #ff79c6;">import</span> matplotlib.pyplot <span style="color: #ff79c6;">as</span> plt
+<span style="color: #ff79c6;">import</span> scipy.integrate <span style="color: #ff79c6;">as</span> integrate
+<span style="color: #ff79c6;">import</span> numpy.linalg <span style="color: #ff79c6;">as</span> la
+</pre>
+</div>
+
+<div id="outline-container-orge37ad89" class="outline-2">
+<h2 id="orge37ad89"><span class="section-number-2">1</span> \(N\) coupled harmonic oscillators: Normal modes</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Many physical systems can be thought of as a collection of oscillators
+influencing each other in potentially quite complex ways. Such behaviours can
+certainly arise, even in one of the simplest such systems, namely, two pendulums
+of the same mass \(m\) and length \(l\), connected by a spring with sping constant
+\(\kappa\), whose unstreched length is the distance between the two pendulums when
+they are in vertical (equilibrium) position.
+<object type="image/svg+xml" data="./media/coupled_drawing.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
+</p>
+
+<p>
+Let us momentarily work with the small-angle approximation, so as to make the
+general discussion simpler. Letting \(K := \kappa/m\) and \(\omega_0 = \sqrt{g/l}\),
+the displacements of the two pendulums from their vertical positions can be
+written as the pair of equations
+</p>
+\begin{gather*}
+{x_1}'' + {\omega_0}^2 x_1 = -K(x_1 - x_2), \\
+{x_2}'' + {\omega_0}^2 x_2 = -K(x_2 - x_1).
+\end{gather*}
+
+<p>
+These may be solved, provided some initial conditions, with the help of various
+mathematical tricks. However, it is usual to investigate the most &ldquo;obvious&rdquo;
+solutions thereof, where the pendulums either move in sync (\(x_1 = x_2\)) or in
+anti-sync (\(x_1 = -x_2\)).
+</p>
+
+<p>
+Synchronised motion leads to identical equations
+\[ {x_i}'' + {\omega_0}^2 x_i = 0, \]
+so that both pendulums have a frequency \(\omega_0\) with
+\[ x_1(t) = x_2(t) = a \cos \omega_0 t + b \sin \omega_0 t, \]
+for some real numbers \(a, b\).
+</p>
+
+<p>
+Anti-sync motion, on the other hand, leads to the equations
+\[ {x_i}'' + {\omega_0}^2 x_i = -2 K x_i, \]
+which is to say that both pendulums have a frequency
+\[ {\omega_0}^+ := \sqrt{{\omega_0}^2 + 2K}; \]
+ultimately giving
+</p>
+\begin{gather*}
+x_1(t) = c \cos {\omega_0}^+ t + d \sin {\omega_0}^+ t, \\
+x_2(t) = -c \cos {\omega_0}^+ t - d \sin {\omega_0}^+ t.
+\end{gather*}
+
+<p>
+Such solutions, known as the <i>normal modes</i> of the system, are particularly
+interesting because the pendulums have the <i>same period</i>. As a matter of fact,
+combinations of the two normal modes,
+</p>
+\begin{gather*}
+x_1(t) = a \cos \omega_0 t + b \sin \omega_0 t + c \cos {\omega_0}^+ t + d \sin {\omega_0}^+ t, \\
+x_2(t) = a \cos \omega_0 t + b \sin \omega_0 t - c \cos {\omega_0}^+ t - d \sin {\omega_0}^+ t,
+\end{gather*}
+<p>
+with four arbitrary constants \(a,b,c,d\), will give us a solution with any
+desired initial conditions \(x_i(0), {x_i}'(0)\).
+</p>
+
+<p>
+Generalisations of these considerations to \(N\) harmonic oscillators, all
+interacting in a linear way, is easy. If we have \(n\) possibly different masses,
+\(m_i\) and lengths \(l_i\), by setting
+\[ K_i = \frac{\kappa}{m_i} \quad {\omega_i}^2 = \frac{g}{l_i}, \]
+we should get \(N\) equations of the form
+</p>
+\begin{equation}
+{x_i}''(t) + {\omega_i}^2 x_i(t) = \sum_{l=1}^N a_{il}x_l, \quad i = 1,\ldots,N;
+\end{equation}
+<p>
+where each \(a_{il}\) is some real number depending on some \(K_i\), and \(a_{il} =
+a_{li}\) because of Newton&rsquo;s third law.
+</p>
+
+<p>
+In this case, for a normal mode, we get complex solutions
+\[ x_i(t) = c_i e^{i\lambda t}, \quad i = 1,\ldots,N; \]
+whose real part represnt the motion of the \(N\) oscillators. Hence we must have:
+\[ -\lambda^2 c_i e^{i\lambda t} + {\omega_i}^2 c_i e^{i\lambda t}  = \sum_{l=1}^N a_{il} c_l e^{i\lambda t}, \quad i = 1,\ldots,N; \]
+which can be rewritten as
+\[ -\lambda^2 c_i = \sum_{l=1}^N a_{il} c_l - c_i {\omega_i}^2, \quad i = 1,\ldots,N. \]
+In matrix form, this may be seen as
+\[ \lambda^2 \begin{pmatrix} c_1 \\ \vdots \\ c_N \end{pmatrix}
+= \left[ \begin{pmatrix} {\omega_1}^2 &  & 0 \\  & \ddots &  \\ 0 &  & {\omega_N}^2 \end{pmatrix} - \begin{pmatrix} a_{11} & \cdots & a_{1N} \\ \vdots & \ddots & \vdots \\ a_{N1} & \cdots & a_{NN} \end{pmatrix} \right] \begin{pmatrix} c_1 \\ \vdots \\ c_N \end{pmatrix}. \]
+Therefore, it is clear that \(\lambda^2\) is an eigenvalue of the matrix in
+brackets, while each \(c_i\) is a component of the corresponding eigenvector. Our
+problem (that of finding the normal modes) amounts to solving an eigenvalue
+problem depending on the parameters of the system. Of course, the matrix in
+brackets turns out to be symmetric, so the spectral theorem tells us that it is
+diagonalisable, and that there exists a basis of eigenvectors with real
+eigenvalues.
+</p>
+
+<p>
+Notice that the aforementioned discussion was given in terms of arbitrary
+parameters \(a_{ij}\), yet we wish to address the particular case of \(n\)
+coupled pendulums. Luckily, we have the apparatus of Newton&rsquo;s second law, which
+will help us find the parameters that should be used in our equation.
+</p>
+
+<p>
+In our appriximation, we have
+</p>
+\begin{align*}
+F_{i,\text{springs}} &= \kappa(x_i - x_{i-1}) - \kappa(x_{i+1} - x_i), \\
+&= \kappa(-x_{i-1} + 2x_i - x_{i+1}).
+\end{align*}
+<p>
+Thus equation (1) turns into
+</p>
+\begin{align*}
+{x_i}''(t) + {\omega_i}^2 x_i(t) &= \frac{\kappa}{m_i} (-x_{i-1} + 2x_i -x_{i+1}), \quad i = 1,\ldots,N, \\
+&:= K_i (-x_{i-1} + 2x_i -x_{i+1}), \quad i = 1,\ldots,N;
+\end{align*}
+<p>
+and so for a normal mode we have:
+\[ \lambda^2 \begin{pmatrix} c_1 \\ \vdots \\ c_N \end{pmatrix}
+= \left[ \begin{pmatrix} {\omega_1}^2 &  & 0 \\  & \ddots &  \\ 0 &  & {\omega_N}^2 \end{pmatrix} +
+\begin{pmatrix} 2K_1 & -K_1 & 0 & 0 & \cdots \\ -K_2 & 2K_2 & -K_2 & 0 & \cdots \\ 0 & -K_3 & 2K_3 & -K_3 & \cdots \\ \vdots & \vdots & \vdots & \vdots & \end{pmatrix} \right]
+\begin{pmatrix} c_1 \\ \vdots \\ c_N \end{pmatrix}. \]
+Hence we just need to solve the aforementioned eigenvalue problem with this matrix in particular.
+</p>
+<div class="org-src-container">
+<pre class="src src-ipython">g = <span style="color: #bd93f9; font-weight: bold;">9.8</span>
+
+<span style="color: #ff79c6;">class</span> <span style="color: #bd93f9;">CoupledPendulums</span>:
+
+    <span style="color: #ff79c6;">def</span> <span style="color: #50fa7b;">__init__</span>(<span style="color: #ff79c6;">self</span>, elastic_constant, masses, lengths):
+        <span style="color: #ff79c6;">if</span> <span style="color: #ffb86c;">len</span>(masses) != <span style="color: #ffb86c;">len</span>(lengths):
+            <span style="color: #ff79c6;">raise</span> <span style="color: #bd93f9;">ValueError</span>
+        <span style="color: #ff79c6;">else</span>:
+            <span style="color: #ff79c6;">self</span>.elastic_constant = elastic_constant
+            <span style="color: #ff79c6;">self</span>.masses = np.asarray(masses)
+            <span style="color: #ff79c6;">self</span>.lengths = np.asarray(lengths)
+            <span style="color: #ff79c6;">self</span>.N = <span style="color: #ffb86c;">len</span>(masses)
+
+    <span style="color: #ff79c6;">def</span> <span style="color: #50fa7b;">normal_modes_matrix</span>(<span style="color: #ff79c6;">self</span>):
+        K = <span style="color: #ff79c6;">self</span>.elastic_constant/<span style="color: #ff79c6;">self</span>.masses
+        omega_squared = g/<span style="color: #ff79c6;">self</span>.lengths
+
+        matrix = np.zeros((<span style="color: #ff79c6;">self</span>.N, <span style="color: #ff79c6;">self</span>.N), dtype=<span style="color: #ffb86c;">float</span>)
+        <span style="color: #6272a4;"># </span><span style="color: #6272a4;">there must be a better way to handle the exceptions here</span>
+        <span style="color: #ff79c6;">for</span> i <span style="color: #ff79c6;">in</span> <span style="color: #ffb86c;">range</span>(<span style="color: #ff79c6;">self</span>.N):
+            <span style="color: #ff79c6;">if</span> i-<span style="color: #bd93f9; font-weight: bold;">1</span> &lt; <span style="color: #bd93f9; font-weight: bold;">0</span>:
+                matrix[i,i] = K[i]
+                matrix[i,i+<span style="color: #bd93f9; font-weight: bold;">1</span>] = -K[i]
+            <span style="color: #ff79c6;">else</span>:
+                <span style="color: #ff79c6;">try</span>:
+                    matrix[i,i] = <span style="color: #bd93f9; font-weight: bold;">2</span>*K[i]
+                    matrix[i,i-<span style="color: #bd93f9; font-weight: bold;">1</span>] = -K[i]
+                    matrix[i,i+<span style="color: #bd93f9; font-weight: bold;">1</span>] = -K[i]
+                <span style="color: #ff79c6;">except</span> <span style="color: #bd93f9;">IndexError</span>:
+                    matrix[i,i] = K[i]
+                    matrix[i,i-<span style="color: #bd93f9; font-weight: bold;">1</span>] = -K[i]
+
+        <span style="color: #ff79c6;">return</span> np.diag(omega_squared) + matrix
+
+    <span style="color: #ff79c6;">def</span> <span style="color: #50fa7b;">normal_modes</span>(<span style="color: #ff79c6;">self</span>, time_domain=np.linspace(<span style="color: #bd93f9; font-weight: bold;">0</span>,<span style="color: #bd93f9; font-weight: bold;">100</span>,<span style="color: #bd93f9; font-weight: bold;">1000</span>)):
+        M = <span style="color: #ff79c6;">self</span>.normal_modes_matrix()
+        frequencies_squared, amplitudes_matrix = np.linalg.eig(M)
+        frequencies = np.sqrt(frequencies_squared)
+        amplitudes = amplitudes_matrix.T
+
+        <span style="color: #6272a4;"># </span><span style="color: #6272a4;">A list of N matrices of dimension N x len(time)</span>
+        x_coords = np.zeros((<span style="color: #ff79c6;">self</span>.N, <span style="color: #ff79c6;">self</span>.N, <span style="color: #ffb86c;">len</span>(time_domain)))
+        <span style="color: #ff79c6;">for</span> i <span style="color: #ff79c6;">in</span> <span style="color: #ffb86c;">range</span>(<span style="color: #ff79c6;">self</span>.N):
+            <span style="color: #ff79c6;">for</span> j <span style="color: #ff79c6;">in</span> <span style="color: #ffb86c;">range</span>(<span style="color: #ff79c6;">self</span>.N):
+                 complex_exponential = amplitudes[i,j] * np.exp(<span style="color: #ffb86c;">complex</span>(<span style="color: #bd93f9; font-weight: bold;">0</span>,<span style="color: #bd93f9; font-weight: bold;">1</span>)*frequencies[i]*time_domain)
+                 x_coords[i,j] = complex_exponential.real
+        <span style="color: #ff79c6;">return</span> x_coords
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ipython">time = np.linspace(<span style="color: #bd93f9; font-weight: bold;">0</span>,<span style="color: #bd93f9; font-weight: bold;">30</span>,<span style="color: #bd93f9; font-weight: bold;">500</span>)
+system = CoupledPendulums(<span style="color: #bd93f9; font-weight: bold;">1</span>, [<span style="color: #bd93f9; font-weight: bold;">5</span>]*<span style="color: #bd93f9; font-weight: bold;">5</span>, [<span style="color: #bd93f9; font-weight: bold;">1</span>]*<span style="color: #bd93f9; font-weight: bold;">5</span>)
+x_coords = system.normal_modes(time_domain=time)
+<span style="color: #6272a4;"># </span><span style="color: #6272a4;">M = system.normal_modes_matrix()</span>
+<span style="color: #6272a4;"># </span><span style="color: #6272a4;">a, b = np.linalg.eig(M)</span>
+<span style="color: #6272a4;"># </span><span style="color: #6272a4;">b.T</span>
+</pre>
+</div>
+
+<p>
+For instance, we have the following normal mode:
+</p>
+<div class="org-src-container">
+<pre class="src src-ipython">plt.plot(time, x_coords[<span style="color: #bd93f9; font-weight: bold;">0</span>,<span style="color: #bd93f9; font-weight: bold;">0</span>])
+plt.plot(time, x_coords[<span style="color: #bd93f9; font-weight: bold;">0</span>,<span style="color: #bd93f9; font-weight: bold;">1</span>])
+plt.plot(time, x_coords[<span style="color: #bd93f9; font-weight: bold;">0</span>,<span style="color: #bd93f9; font-weight: bold;">2</span>])
+plt.plot(time, x_coords[<span style="color: #bd93f9; font-weight: bold;">0</span>,<span style="color: #bd93f9; font-weight: bold;">3</span>])
+plt.plot(time, x_coords[<span style="color: #bd93f9; font-weight: bold;">0</span>,<span style="color: #bd93f9; font-weight: bold;">4</span>])
+plt.xlim(<span style="color: #bd93f9; font-weight: bold;">0</span>,<span style="color: #bd93f9; font-weight: bold;">10</span>)
+plt.grid()
+plt.show()
+</pre>
+</div>
+
+
+<div id="orgf037c29" class="figure">
+<p><object type="image/svg+xml" data="./obipy-resources/ME0iJw.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #ff79c6;">from</span> matplotlib <span style="color: #ff79c6;">import</span> animation
+
+N = <span style="color: #ffb86c;">len</span>(time)
+dt = time[<span style="color: #bd93f9; font-weight: bold;">1</span>] - time[<span style="color: #bd93f9; font-weight: bold;">0</span>]
+
+fig, (ax1, ax2, ax3, ax4, ax5) = plt.subplots(<span style="color: #bd93f9; font-weight: bold;">5</span>,<span style="color: #bd93f9; font-weight: bold;">1</span>, figsize=(<span style="color: #bd93f9; font-weight: bold;">8</span>,<span style="color: #bd93f9; font-weight: bold;">12</span>))
+oscillators = np.zeros((<span style="color: #bd93f9; font-weight: bold;">5</span>,<span style="color: #bd93f9; font-weight: bold;">5</span>), dtype=<span style="color: #ffb86c;">object</span>)
+<span style="color: #6272a4;"># </span><span style="color: #6272a4;">lines = np.zeros((5,5), dtype=object)</span>
+<span style="color: #ff79c6;">for</span> i, axis <span style="color: #ff79c6;">in</span> <span style="color: #ffb86c;">enumerate</span>([ax1, ax2, ax3, ax4, ax5]):
+    <span style="color: #ff79c6;">for</span> j <span style="color: #ff79c6;">in</span> <span style="color: #ffb86c;">range</span>(<span style="color: #bd93f9; font-weight: bold;">5</span>):
+        oscillators[i,j], = axis.plot([], [], lw=<span style="color: #bd93f9; font-weight: bold;">0</span>, ms=<span style="color: #bd93f9; font-weight: bold;">20</span>, marker=<span style="color: #f1fa8c;">'s'</span>, mfc=<span style="color: #f1fa8c;">'gray'</span>, fillstyle=<span style="color: #f1fa8c;">'full'</span>, mec=<span style="color: #f1fa8c;">'black'</span>, markevery=<span style="color: #bd93f9; font-weight: bold;">2</span>)
+        <span style="color: #6272a4;"># </span><span style="color: #6272a4;">lines[i,j], = axis.plot([], [], lw=1, color='r')</span>
+
+    axis.set_xlim(-<span style="color: #bd93f9; font-weight: bold;">10</span>, <span style="color: #bd93f9; font-weight: bold;">50</span>)
+    axis.set_xlabel(<span style="color: #f1fa8c;">'x'</span>)
+    axis.set_ylabel(<span style="color: #f1fa8c;">'y'</span>)
+
+<span style="color: #ff79c6;">def</span> <span style="color: #50fa7b;">init_animation</span>():
+    <span style="color: #8995ba;">''' Initialise the animation as an empty object '''</span>
+    <span style="color: #ff79c6;">for</span> i <span style="color: #ff79c6;">in</span> <span style="color: #ffb86c;">range</span>(<span style="color: #bd93f9; font-weight: bold;">5</span>):
+        <span style="color: #ff79c6;">for</span> j <span style="color: #ff79c6;">in</span> <span style="color: #ffb86c;">range</span>(<span style="color: #bd93f9; font-weight: bold;">5</span>):
+            oscillators[i,j].set_data([], [])
+            <span style="color: #6272a4;"># </span><span style="color: #6272a4;">lines[i,j].set_data([], [])</span>
+            <span style="color: #ff79c6;">yield</span> oscillators[i,j]
+    <span style="color: #6272a4;"># </span><span style="color: #6272a4;">return [oscillators[i,j] for i in range(5) for j in range(5)], [lines[i,j] for i in range(5) for j in range(5)]</span>
+
+<span style="color: #ff79c6;">def</span> <span style="color: #50fa7b;">animate</span>(k):
+    distance = <span style="color: #bd93f9; font-weight: bold;">10</span>
+    <span style="color: #ff79c6;">for</span> i <span style="color: #ff79c6;">in</span> <span style="color: #ffb86c;">range</span>(<span style="color: #bd93f9; font-weight: bold;">5</span>):
+        <span style="color: #ff79c6;">for</span> j <span style="color: #ff79c6;">in</span> <span style="color: #ffb86c;">range</span>(<span style="color: #bd93f9; font-weight: bold;">5</span>):
+            oscillators[i,j].set_data([distance*j + x_coords[i,j,k],<span style="color: #bd93f9; font-weight: bold;">0</span>], [<span style="color: #bd93f9; font-weight: bold;">0</span>,<span style="color: #bd93f9; font-weight: bold;">0</span>])
+            <span style="color: #6272a4;"># </span><span style="color: #6272a4;">lines[i,j].set_data(time[:k], x_coords[i,j][:k])</span>
+            <span style="color: #ff79c6;">yield</span> oscillators[i,j]
+    <span style="color: #6272a4;"># </span><span style="color: #6272a4;">return [oscillators[i,j] for i in range(5) for j in range(5)], [lines[i,j] for i in range(5) for j in range(5)]</span>
+
+ani = animation.FuncAnimation(fig, animate, np.arange(<span style="color: #bd93f9; font-weight: bold;">1</span>, N),
+                              interval=<span style="color: #bd93f9; font-weight: bold;">50</span>, blit=<span style="color: #8be9fd;">True</span>, init_func=init_animation,repeat=<span style="color: #8be9fd;">False</span>)
+plt.close()
+
+ani.save(<span style="color: #f1fa8c;">'./media/pendulums.mp4'</span>, fps=<span style="color: #bd93f9; font-weight: bold;">20</span>)
+</pre>
+</div>
+
+
+<div id="org56f9467" class="figure">
+<p><img src="./media/pendulums.gif" alt="pendulums.gif" />
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Juan David Salcedo Hernández</p>
+<p class="date">Created: 2021-10-24 Sun 20:47</p>
+<p class="creator"><a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.5)</p>
+</div>
+</body>
+</html>

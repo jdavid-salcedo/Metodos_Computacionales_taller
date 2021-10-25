@@ -13,7 +13,7 @@ import numpy.linalg as la
 
 #+RESULTS:
 :results:
-# Out[26]:
+# Out[1]:
 :end:
 
 * Numerical evaluation of ODEs in python
@@ -33,7 +33,7 @@ def derivatives(generalized_coordinates, time, params):
 
 #+RESULTS:
 :results:
-# Out[3]:
+# Out[2]:
 :end:
 We define the initial conditions:
 #+begin_src ipython :session asession :results raw drawer :exports both
@@ -52,7 +52,7 @@ t = np.linspace(0,20,10000)
 
 #+RESULTS:
 :results:
-# Out[5]:
+# Out[3]:
 :end:
 Right after that, we can "integrate the equation" to find the generalised coordinates describing the motion.
 #+begin_src ipython :session asession :results raw drawer :exports both
@@ -78,8 +78,8 @@ plt.show()
 
 #+RESULTS:
 :results:
-# Out[6]:
-[[file:./obipy-resources/nYuTnk.svg]]
+# Out[4]:
+[[file:./obipy-resources/rNG42X.svg]]
 :end:
 
 #+RESULTS:

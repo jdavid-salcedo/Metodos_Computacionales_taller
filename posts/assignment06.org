@@ -15,7 +15,7 @@ import matplotlib.pyplot as plt
 
 #+RESULTS:
 :results:
-# Out[40]:
+# Out[449]:
 :end:
 
 * Differentiation: Lucy's quartic kernel
@@ -49,7 +49,7 @@ def diff(func, x0, **kwargs) :
 
 #+RESULTS:
 :results:
-# Out[41]:
+# Out[450]:
 :end:
 Here we are just vectorising the ~derivative~ operation that is available on the
 ~scipy~ module. In fact, we use the ~derivative~ operation itself if we are
@@ -113,7 +113,7 @@ def graph(h, r_src, r0=-1.5, rf=1.5) :
 
 #+RESULTS:
 :results:
-# Out[48]:
+# Out[451]:
 :end:
 #+begin_src ipython :session asession :results raw drawer :exports both
 graph(h=1, r_src=0)
@@ -121,8 +121,8 @@ graph(h=1, r_src=0)
 
 #+RESULTS:
 :results:
-# Out[49]:
-[[file:./obipy-resources/5AKthf.svg]]
+# Out[452]:
+[[file:./obipy-resources/nmR0fi.svg]]
 :end:
 
 * Integration
@@ -303,7 +303,7 @@ class Function :
 
 #+RESULTS:
 :results:
-# Out[2]:
+# Out[453]:
 :end:
 ** Proof of concept
 We can, for instance find the following integral:
@@ -316,7 +316,7 @@ g.trapezoid(epsilon=1e-5), g.simpson(epsilon=1e-5)
 
 #+RESULTS:
 :results:
-# Out[3]:
+# Out[454]:
 : (497663.83333400625, 497663.8333387183)
 :end:
 
@@ -333,7 +333,7 @@ trap, simp, quad
 
 #+RESULTS:
 :results:
-# Out[137]:
+# Out[455]:
 : (2.0300760037942545, 2.030079539104097, 2.030078469278705)
 :end:
 
@@ -350,7 +350,7 @@ trap, simp, quad
 
 #+RESULTS:
 :results:
-# Out[168]:
+# Out[456]:
 : (2.00381124795606, 2.0038118326682275, 2.0038105616240243)
 :end:
 
@@ -385,7 +385,7 @@ trap, simp, quad
 
 #+RESULTS:
 :results:
-# Out[5]:
+# Out[457]:
 : (3.141587676831256, 3.1415926453708467, 3.141592653589793)
 :end:
 
@@ -408,7 +408,7 @@ trap, simp, quad
 
 #+RESULTS:
 :results:
-# Out[7]:
+# Out[458]:
 : (0.4840164686312476, 0.5118481687502379, 0.5118446353109126)
 :end:
 
@@ -440,7 +440,7 @@ v
 
 #+RESULTS:
 :results:
-# Out[178]:
+# Out[459]:
 : 70006579690.76907
 :end:
 
@@ -480,7 +480,7 @@ def simpson(function, n, a=0, b=1) :
 
 #+RESULTS:
 :results:
-# Out[102]:
+# Out[460]:
 :end:
 Also, we can come up with a fairly uncomplicated implementation of the Gaussian
 quadrature approximation:
@@ -493,7 +493,7 @@ def quadrature(function, n, a=0, b=1) :
 
 #+RESULTS:
 :results:
-# Out[116]:
+# Out[461]:
 :end:
 
 Suppose that we want to analyse the error in computing the integrals we've seen
@@ -549,7 +549,7 @@ tabulate(df, headers='keys', tablefmt='orgtbl', showindex='always')
 
 #+RESULTS:
 :results:
-# Out[121]:
+# Out[462]:
 |    |   n |    eps_trap |    eps_simp |    eps_quad |
 |----+-----+-------------+-------------+-------------|
 |  0 |   2 | 0.00520292  | 2.1541e-05  | 4.79599e-07 |
@@ -576,8 +576,8 @@ plt.show()
 
 #+RESULTS:
 :results:
-# Out[131]:
-[[file:./obipy-resources/T7lKpm.svg]]
+# Out[463]:
+[[file:./obipy-resources/0vECQ7.svg]]
 :end:
 The trapezoid and Simpson errors are apparently a straight line, we can find an equation for them as follows:
 #+begin_src ipython :session asession :results raw drawer :exports both
@@ -611,6 +611,6 @@ plt.show()
 
 #+RESULTS:
 :results:
-# Out[157]:
-[[file:./obipy-resources/bOFEco.svg]]
+# Out[464]:
+[[file:./obipy-resources/ntF0g4.svg]]
 :end:

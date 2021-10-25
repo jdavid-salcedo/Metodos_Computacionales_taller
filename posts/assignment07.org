@@ -11,7 +11,7 @@ import scipy.integrate as integrate
 
 #+RESULTS:
 :results:
-# Out[9]:
+# Out[465]:
 :end:
 
 * Setting up the problem
@@ -40,7 +40,7 @@ def k_sr(r, theta, a) :
 
 #+RESULTS:
 :results:
-# Out[2]:
+# Out[466]:
 :end:
 
 We can visualise this function over the domain on which we're integrating it, as
@@ -57,8 +57,8 @@ plt.show()
 
 #+RESULTS:
 :results:
-# Out[5]:
-[[file:./obipy-resources/pX31uY.svg]]
+# Out[467]:
+[[file:./obipy-resources/M3CFmy.svg]]
 :end:
 
 Now that we have the number $k$, we may proceed with the computation of the
@@ -83,7 +83,7 @@ def E(r, theta, a):
 
 #+RESULTS:
 :results:
-# Out[11]:
+# Out[468]:
 :end:
 We can thereupon define a function that yeields the norm of the magnetic vector
 potential:
@@ -101,7 +101,7 @@ def vector_potential(r, theta, I=3, a=1):
 
 #+RESULTS:
 :results:
-# Out[17]:
+# Out[469]:
 :end:
 
 * Plot the graph of the single-variable function $A_\varphi(1.1,\theta)$.
@@ -119,8 +119,8 @@ plt.show()
 
 #+RESULTS:
 :results:
-# Out[23]:
-[[file:./obipy-resources/4D3XjU.svg]]
+# Out[470]:
+[[file:./obipy-resources/SwAoPQ.svg]]
 :end:
 * Plot the graph of the single-variable function $A_\varphi(r,\pi/3)$.
 #+begin_src ipython :session asession :results raw drawer :exports both
@@ -136,6 +136,6 @@ plt.show()
 
 #+RESULTS:
 :results:
-# Out[22]:
-[[file:./obipy-resources/yRstWn.svg]]
+# Out[471]:
+[[file:./obipy-resources/rZOVb2.svg]]
 :end:

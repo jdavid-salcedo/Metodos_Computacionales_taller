@@ -17,7 +17,7 @@ from tabulate import tabulate
 
 #+RESULTS:
 :results:
-# Out[1]:
+# Out[439]:
 :end:
 
 * Analytic derivative with Sympy
@@ -30,7 +30,7 @@ f(x)
 
 #+RESULTS:
 :results:
-# Out[83]:
+# Out[440]:
 : log(x) + sin(x**2)
 :end:
 Therewith we can perform different symbolic operations, for instace, we can differentiate the function ~f~:
@@ -42,7 +42,7 @@ Df
 
 #+RESULTS:
 :results:
-# Out[84]:
+# Out[441]:
 : 2*x*cos(x**2) + 1/x
 :end:
 We cannot directly evaluate sympy-generated functions; we should lambdify them instead:
@@ -57,8 +57,8 @@ plt.show()
 
 #+RESULTS:
 :results:
-# Out[85]:
-[[file:./obipy-resources/Kbz7t9.svg]]
+# Out[442]:
+[[file:./obipy-resources/D0OuBv.svg]]
 :end:
 
 * Activity
@@ -79,7 +79,7 @@ tabulate(df.head(), headers='keys', tablefmt='orgtbl', showindex='always')
 
 #+RESULTS:
 :results:
-# Out[3]:
+# Out[443]:
 |    |   Tiempo (ms) | Ángulo 1,        |
 |----+---------------+------------------|
 |  0 |             9 | 59,289611816406  |
@@ -107,7 +107,7 @@ tabulate(df.head(), headers='keys', tablefmt='orgtbl', showindex='always')
 
 #+RESULTS:
 :results:
-# Out[4]:
+# Out[444]:
 |    |   Tiempo[ms] |   AnguloDeg |   AnguloRad |
 |----+--------------+-------------+-------------|
 |  0 |            9 |     59.2896 |   -0.535997 |
@@ -128,8 +128,8 @@ plt.show()
 
 #+RESULTS:
 :results:
-# Out[5]:
-[[file:./obipy-resources/GzUYys.svg]]
+# Out[445]:
+[[file:./obipy-resources/jjb28E.svg]]
 :end:
 
 Now we would like to obtain the frequency at which the pendulum moves. We can
@@ -183,8 +183,8 @@ plt.show()
 
 #+RESULTS:
 :results:
-# Out[14]:
-[[file:./obipy-resources/Xqo5Vf.svg]]
+# Out[446]:
+[[file:./obipy-resources/eu4y5a.svg]]
 :end:
 
 We may then interpolate these datapoints with cubic splines as follows:
@@ -215,8 +215,8 @@ plt.show()
 
 #+RESULTS:
 :results:
-# Out[15]:
-[[file:./obipy-resources/IBgtBg.svg]]
+# Out[447]:
+[[file:./obipy-resources/APadm7.svg]]
 :end:
 
 Now we find a root for the derivative of the interpolation, which gives us the

@@ -1,0 +1,621 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2021-10-24 Sun 21:02 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Review4</title>
+<meta name="author" content="Juan David Salcedo Hernández" />
+<meta name="generator" content="Org Mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="src/readtheorg_theme/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="src/readtheorg_theme/css/readtheorg.css"/>
+<script type="text/javascript" src="src/lib/js/jquery.min.js"></script>
+<script type="text/javascript" src="src/lib/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="src/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript" src="src/readtheorg_theme/js/readtheorg.js"></script>
+<script type="text/javascript">
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
+<!--/*--><![CDATA[/*><!--*/
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Review4</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org14408b7">1. The elastic pendulum</a>
+<ul>
+<li><a href="#orga36f179">1.1. Configuration manifold</a></li>
+</ul>
+</li>
+<li><a href="#org8ead434">2. Linear algebra</a></li>
+<li><a href="#org71a4e5a">3. Configuration manifold for a spring with friction</a></li>
+<li><a href="#org513d93c">4. More differential equations</a></li>
+</ul>
+</div>
+</div>
+<div class="org-src-container">
+<pre class="src src-ipython">%config InlineBackend.figure_format = <span style="color: #f1fa8c;">'svg'</span>
+
+<span style="color: #ff79c6;">from</span> scipy.integrate <span style="color: #ff79c6;">import</span> odeint
+<span style="color: #ff79c6;">import</span> numpy <span style="color: #ff79c6;">as</span> np
+<span style="color: #ff79c6;">import</span> matplotlib.pyplot <span style="color: #ff79c6;">as</span> plt
+</pre>
+</div>
+
+<div id="outline-container-org14408b7" class="outline-2">
+<h2 id="org14408b7"><span class="section-number-2">1</span> The elastic pendulum</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Consider a spring with rest length \(l_0\), which oscillates with an angle \(\theta(t)\).
+</p>
+
+<p>
+The equations of motion for this system are:
+\[ x''(t) = (l_0 + x(t)) \theta'(t)^2 - \frac{k}{m} x(t) + g \cos \theta(t) \]
+along with
+\[ \theta''(t) = -\frac{g}{l_0 + x(t)}\sin\theta - \frac{2x'(t)}{l_0 + x(t)}\theta'(t) \]
+</p>
+
+<p>
+Of course, we can define our generalised coordinates as follows:
+\[ \begin{pmatrix} x(t) \\ \theta(t) \\ x'(t) \\ \theta'(x) \end{pmatrix}. \]
+Which readily allows us to obtain:
+</p>
+<div class="org-src-container">
+<pre class="src src-ipython">g = <span style="color: #bd93f9; font-weight: bold;">9.8</span>
+<span style="color: #ff79c6;">def</span> <span style="color: #50fa7b;">derivatives</span>(generalized_coordinates, time, nat_len, elastic_k, mass):
+
+    pos, ampl, vel, ang_vel = generalized_coordinates
+
+    <span style="color: #6272a4;"># </span><span style="color: #6272a4;">derivatives for each generalized coordinate tuple</span>
+    derivatives = [vel, ang_vel,
+                   (nat_len + pos)*ang_vel**<span style="color: #bd93f9; font-weight: bold;">2</span> - (elastic_k/mass)*pos + g*np.cos(ampl),
+                   -(g*np.sin(ampl) + <span style="color: #bd93f9; font-weight: bold;">2</span>*vel*ang_vel)/(nat_len + pos)]
+    <span style="color: #ff79c6;">return</span> derivatives
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #ff79c6;">def</span> <span style="color: #50fa7b;">solve</span>(init_pos, init_ampl, init_vel, init_ang_vel,
+          nat_len, elastic_k, mass, time_domain=np.linspace(<span style="color: #bd93f9; font-weight: bold;">0</span>,<span style="color: #bd93f9; font-weight: bold;">30</span>,<span style="color: #bd93f9; font-weight: bold;">1000</span>),
+          full_output=<span style="color: #8be9fd;">False</span>):
+
+    init_state = [init_pos, init_ampl, init_vel, init_ang_vel]
+    params = nat_len, elastic_k, mass
+
+    generalized_coordinates = odeint(derivatives, init_state, time_domain, args=params)
+    positions = generalized_coordinates[:,<span style="color: #bd93f9; font-weight: bold;">0</span>]
+    amplitudes = generalized_coordinates[:,<span style="color: #bd93f9; font-weight: bold;">1</span>]
+    velocities = generalized_coordinates[:,<span style="color: #bd93f9; font-weight: bold;">2</span>]
+    angular_velocities = generalized_coordinates[:,<span style="color: #bd93f9; font-weight: bold;">3</span>]
+
+    <span style="color: #6272a4;"># </span><span style="color: #6272a4;">get standard coordinates</span>
+    x_coords = (nat_len + positions)*np.sin(amplitudes)
+    y_coords = -(nat_len + positions)*np.cos(amplitudes)
+
+    <span style="color: #ff79c6;">if</span> <span style="color: #ff79c6;">not</span> full_output:
+        <span style="color: #ff79c6;">return</span> x_coords, y_coords
+    <span style="color: #ff79c6;">else</span>:
+        <span style="color: #ff79c6;">return</span> positions, amplitudes, velocities, angular_velocities
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ipython">x, y = solve(init_pos=<span style="color: #bd93f9; font-weight: bold;">1</span>, init_ampl=<span style="color: #bd93f9; font-weight: bold;">0.3</span>, init_vel=<span style="color: #bd93f9; font-weight: bold;">0</span>, init_ang_vel=<span style="color: #bd93f9; font-weight: bold;">0</span>,
+             nat_len=<span style="color: #bd93f9; font-weight: bold;">1</span>, elastic_k=<span style="color: #bd93f9; font-weight: bold;">4</span>, mass=<span style="color: #bd93f9; font-weight: bold;">0.5</span>,
+             time_domain=np.linspace(<span style="color: #bd93f9; font-weight: bold;">0</span>,<span style="color: #bd93f9; font-weight: bold;">40</span>,<span style="color: #bd93f9; font-weight: bold;">1000</span>))
+
+plt.plot(x, y, <span style="color: #f1fa8c;">'k-'</span>)
+plt.xlabel(<span style="color: #f1fa8c;">'$x(t)$'</span>)
+plt.ylabel(<span style="color: #f1fa8c;">'$y(t)$'</span>)
+plt.grid()
+plt.show()
+</pre>
+</div>
+
+
+<div id="org2cf69bf" class="figure">
+<p><object type="image/svg+xml" data="./obipy-resources/rk4GRx.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+</div>
+<div id="outline-container-orga36f179" class="outline-3">
+<h3 id="orga36f179"><span class="section-number-3">1.1</span> Configuration manifold</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+We shall plot the configuration manifold in the space of generalised coordinates:
+</p>
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #ff79c6;">def</span> <span style="color: #50fa7b;">config_manifold</span>(nat_len, elastic_k, mass,
+                    max_pos=<span style="color: #bd93f9; font-weight: bold;">1</span>, min_ampl=-np.pi/<span style="color: #bd93f9; font-weight: bold;">2</span>, max_ampl=np.pi/<span style="color: #bd93f9; font-weight: bold;">2</span>,
+                    min_vel=-<span style="color: #bd93f9; font-weight: bold;">1</span>, max_vel=<span style="color: #bd93f9; font-weight: bold;">1</span>, min_ang_vel=-<span style="color: #bd93f9; font-weight: bold;">1</span>,
+                    max_ang_vel=<span style="color: #bd93f9; font-weight: bold;">1</span>, n=<span style="color: #bd93f9; font-weight: bold;">100</span>):
+
+    init_positions = np.random.uniform(<span style="color: #bd93f9; font-weight: bold;">0</span>,max_pos,n)
+    init_amplitudes = np.random.uniform(min_ampl,max_ampl,n)
+    init_velocities = np.random.uniform(min_vel,max_vel,n)
+    init_ang_velocities = np.random.uniform(min_ang_vel,max_ang_vel,n)
+
+    ampl_coords = <span style="color: #ffb86c;">list</span>()
+    ang_vel_coords = <span style="color: #ffb86c;">list</span>()
+    <span style="color: #ff79c6;">for</span> pos, ampl, vel, ang_vel <span style="color: #ff79c6;">in</span> <span style="color: #ffb86c;">zip</span>(init_positions, init_amplitudes,
+                                       init_velocities, init_ang_velocities):
+        positions, amplitudes, velocities, angular_velocities = solve(pos, ampl, vel, ang_vel,
+                                                                      nat_len, elastic_k, mass,
+                                                                      time_domain=np.linspace(<span style="color: #bd93f9; font-weight: bold;">0</span>,<span style="color: #bd93f9; font-weight: bold;">30</span>,<span style="color: #bd93f9; font-weight: bold;">10000</span>),
+                                                                      full_output=<span style="color: #8be9fd;">True</span>)
+        ampl_coords.append(amplitudes)
+        ang_vel_coords.append(angular_velocities)
+    <span style="color: #ff79c6;">return</span> ampl_coords, ang_vel_coords
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ipython">amplitudes, ang_velocities = config_manifold(nat_len=<span style="color: #bd93f9; font-weight: bold;">1</span>, elastic_k=<span style="color: #bd93f9; font-weight: bold;">4</span>, mass=<span style="color: #bd93f9; font-weight: bold;">0.5</span>)
+<span style="color: #ff79c6;">for</span> i <span style="color: #ff79c6;">in</span> <span style="color: #ffb86c;">range</span>(<span style="color: #ffb86c;">len</span>(amplitudes)-<span style="color: #bd93f9; font-weight: bold;">1</span>):
+    plt.plot(amplitudes[i], ang_velocities[i], <span style="color: #f1fa8c;">'b-'</span>, lw=<span style="color: #bd93f9; font-weight: bold;">0.2</span>)
+plt.xlabel(<span style="color: #f1fa8c;">'$\theta(t)$'</span>)
+plt.ylabel(<span style="color: #f1fa8c;">'$\omega(t)$'</span>)
+plt.grid()
+plt.show()
+</pre>
+</div>
+
+
+<div id="org5f5ac9f" class="figure">
+<p><object type="image/svg+xml" data="./obipy-resources/MOIr2C.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8ead434" class="outline-2">
+<h2 id="org8ead434"><span class="section-number-2">2</span> Linear algebra</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Consider a diagonalisable 3 by 3 real matrix A. We may define a particular diagonal matrix \(A_\text{diag}\) as
+\[ P A_\text{diag} = A U\]
+where \(P\) is a permutation matrix (its effect is just changing the order of \(A_\text{diag}\)&rsquo;s columns). Our objective is to find some &ldquo;mixing angles&rdquo; provided a descending order of the eigenvalues in $A<sub>\text</sub>{diag}.$
+</p>
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #ff79c6;">def</span> <span style="color: #50fa7b;">mixing_angles</span>(M):
+    <span style="color: #6272a4;"># </span><span style="color: #6272a4;">Notice that the matrix is NORMAl, which is to say that there exists an isometry U such that A_diag = U A U^{-1};</span>
+    <span style="color: #6272a4;"># </span><span style="color: #6272a4;">the square of the eigenvalues of such matrices are the eigenvalues of themselves multiplied by their transpose,</span>
+    <span style="color: #6272a4;"># </span><span style="color: #6272a4;">the order does not matter</span>
+    squared_eigvals, eigvecs = np.linalg.eig(M.T @ M)
+    eigvals = np.sort(np.sqrt(squared_eigvals))[::-<span style="color: #bd93f9; font-weight: bold;">1</span>]
+
+    ordered_columns = squared_eigvals.argsort()[::-<span style="color: #bd93f9; font-weight: bold;">1</span>]
+    ordered_eigvecs = np.c_[<span style="color: #ffb86c;">tuple</span>(eigvecs[:,i] <span style="color: #ff79c6;">for</span> i <span style="color: #ff79c6;">in</span> ordered_columns)]
+
+    <span style="color: #6272a4;"># </span><span style="color: #6272a4;">mixing angles</span>
+    ang_13 = np.arcsin(ordered_eigvecs[<span style="color: #bd93f9; font-weight: bold;">0</span>,<span style="color: #bd93f9; font-weight: bold;">2</span>])
+    ang_12 = np.arcsin(ordered_eigvecs[<span style="color: #bd93f9; font-weight: bold;">0</span>,<span style="color: #bd93f9; font-weight: bold;">1</span>]/np.cos(ang_13))
+    ang_23 = np.arcsin(ordered_eigvecs[<span style="color: #bd93f9; font-weight: bold;">1</span>,<span style="color: #bd93f9; font-weight: bold;">2</span>]/np.cos(ang_13))
+
+    <span style="color: #ff79c6;">return</span> {<span style="color: #f1fa8c;">'eigenvalues'</span>: <span style="color: #ffb86c;">list</span>(eigvals), <span style="color: #f1fa8c;">'mixing angles'</span>: <span style="color: #ffb86c;">list</span>(<span style="color: #ffb86c;">map</span>(np.rad2deg, [ang_12, ang_13, ang_23]))}
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ipython">M = np.array([[<span style="color: #bd93f9; font-weight: bold;">7</span>.778162746217654799e+<span style="color: #bd93f9; font-weight: bold;">00</span>, -<span style="color: #bd93f9; font-weight: bold;">7</span>.662363998929994757e+<span style="color: #bd93f9; font-weight: bold;">00</span>,  <span style="color: #bd93f9; font-weight: bold;">1</span>.337296616780795588e+<span style="color: #bd93f9; font-weight: bold;">00</span>],
+            [<span style="color: #bd93f9; font-weight: bold;">2</span>.121317112604814703e+<span style="color: #bd93f9; font-weight: bold;">00</span>,  <span style="color: #bd93f9; font-weight: bold;">2</span>.088449805848296759e+<span style="color: #bd93f9; font-weight: bold;">00</span>, -<span style="color: #bd93f9; font-weight: bold;">3</span>.720095646918017973e-<span style="color: #bd93f9; font-weight: bold;">01</span>],
+            [<span style="color: #bd93f9; font-weight: bold;">6</span>.981313463593235256e-<span style="color: #bd93f9; font-weight: bold;">03</span>,  <span style="color: #bd93f9; font-weight: bold;">6</span>.945916527427932197e-<span style="color: #bd93f9; font-weight: bold;">01</span>,  <span style="color: #bd93f9; font-weight: bold;">3</span>.939225012258420922e+<span style="color: #bd93f9; font-weight: bold;">00</span>]])
+
+mixing_angles(M)
+</pre>
+</div>
+
+<pre class="example" id="org250426c">
+  {'eigenvalues': [11.0, 3.9999999999999996, 3.0000000000000004],
+  'mixing angles': [0.1414212126396247, -44.999912733626005, -79.9000001523084]}
+</pre>
+<div class="org-src-container">
+<pre class="src src-ipython">P, diag, U_adjoint = np.linalg.svd(M)
+np.rad2deg(np.arcsin(U_adjoint[<span style="color: #bd93f9; font-weight: bold;">0</span>,<span style="color: #bd93f9; font-weight: bold;">2</span>]))
+</pre>
+</div>
+
+<pre class="example">
+-6.982860079088258
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org71a4e5a" class="outline-2">
+<h2 id="org71a4e5a"><span class="section-number-2">3</span> Configuration manifold for a spring with friction</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+We have the following differential equation:
+\[ -kx(t) - bx'(t) = mx''(t) \]
+Hence:
+</p>
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #ff79c6;">def</span> <span style="color: #50fa7b;">derivatives</span>(generalized_coordinates, time, elastic_k, mass, friction_param):
+
+    pos, vel = generalized_coordinates
+
+    <span style="color: #6272a4;"># </span><span style="color: #6272a4;">derivatives for each generalized coordinate tuple</span>
+    derivatives = [vel, (<span style="color: #bd93f9; font-weight: bold;">1</span>/mass)*(-elastic_k*pos - friction_param*vel)]
+    <span style="color: #ff79c6;">return</span> derivatives
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #ff79c6;">def</span> <span style="color: #50fa7b;">solve</span>(init_pos, init_vel, elastic_k, mass, friction_param,
+          time_domain=np.linspace(<span style="color: #bd93f9; font-weight: bold;">0</span>,<span style="color: #bd93f9; font-weight: bold;">30</span>,<span style="color: #bd93f9; font-weight: bold;">1000</span>)):
+
+    init_state = [init_pos, init_vel]
+    params = elastic_k, mass, friction_param
+
+    generalized_coordinates = odeint(derivatives, init_state, time_domain, args=params)
+    positions = generalized_coordinates[:,<span style="color: #bd93f9; font-weight: bold;">0</span>]
+    velocities = generalized_coordinates[:,<span style="color: #bd93f9; font-weight: bold;">1</span>]
+
+    <span style="color: #ff79c6;">return</span> positions, velocities
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #ff79c6;">def</span> <span style="color: #50fa7b;">config_manifold</span>(elastic_k=<span style="color: #bd93f9; font-weight: bold;">1</span>, mass=<span style="color: #bd93f9; font-weight: bold;">1</span>, friction_param=<span style="color: #bd93f9; font-weight: bold;">1</span>/<span style="color: #bd93f9; font-weight: bold;">3</span>, min_pos=-<span style="color: #bd93f9; font-weight: bold;">1</span>, max_pos=<span style="color: #bd93f9; font-weight: bold;">1</span>,
+                    min_vel=-<span style="color: #bd93f9; font-weight: bold;">1</span>, max_vel=<span style="color: #bd93f9; font-weight: bold;">1</span>, n=<span style="color: #bd93f9; font-weight: bold;">100</span>):
+
+    init_positions = np.random.uniform(min_pos,max_pos,n)
+    init_velocities = np.random.uniform(min_vel,max_vel,n)
+
+    pos_coords = <span style="color: #ffb86c;">list</span>()
+    vel_coords = <span style="color: #ffb86c;">list</span>()
+    <span style="color: #ff79c6;">for</span> pos, vel <span style="color: #ff79c6;">in</span> <span style="color: #ffb86c;">zip</span>(init_positions, init_velocities):
+        positions, velocities = solve(pos, vel, elastic_k, mass, friction_param)
+        pos_coords.append(positions)
+        vel_coords.append(velocities)
+
+    <span style="color: #ff79c6;">return</span> pos_coords, vel_coords
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ipython">positions, velocities = config_manifold()
+<span style="color: #ff79c6;">for</span> i <span style="color: #ff79c6;">in</span> <span style="color: #ffb86c;">range</span>(<span style="color: #ffb86c;">len</span>(positions)-<span style="color: #bd93f9; font-weight: bold;">1</span>):
+    plt.plot(positions[i], velocities[i], <span style="color: #f1fa8c;">'k-'</span>, lw=<span style="color: #bd93f9; font-weight: bold;">0.3</span>)
+plt.xlabel(<span style="color: #f1fa8c;">'$x(t)$'</span>)
+plt.ylabel(<span style="color: #f1fa8c;">'$v(t)$'</span>)
+plt.grid()
+plt.show()
+</pre>
+</div>
+
+
+<div id="orgf627e8a" class="figure">
+<p><object type="image/svg+xml" data="./obipy-resources/xSw2qD.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+<p>
+Less mass, no friction at all
+</p>
+<div class="org-src-container">
+<pre class="src src-ipython">positions, velocities = config_manifold(mass=<span style="color: #bd93f9; font-weight: bold;">0.2</span>, friction_param=<span style="color: #bd93f9; font-weight: bold;">0</span>)
+<span style="color: #ff79c6;">for</span> i <span style="color: #ff79c6;">in</span> <span style="color: #ffb86c;">range</span>(<span style="color: #ffb86c;">len</span>(positions)-<span style="color: #bd93f9; font-weight: bold;">1</span>):
+    plt.plot(positions[i], velocities[i], <span style="color: #f1fa8c;">'k-'</span>, lw=<span style="color: #bd93f9; font-weight: bold;">0.3</span>)
+plt.xlabel(<span style="color: #f1fa8c;">'$x(t)$'</span>)
+plt.ylabel(<span style="color: #f1fa8c;">'$v(t)$'</span>)
+plt.grid()
+plt.show()
+</pre>
+</div>
+
+
+<div id="org63b97d0" class="figure">
+<p><object type="image/svg+xml" data="./obipy-resources/ZEEAKp.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org513d93c" class="outline-2">
+<h2 id="org513d93c"><span class="section-number-2">4</span> More differential equations</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+Solve for \(\alpha_i\), \(i = 1, 2, 3:\)
+\[ ({\alpha_i}^{-1})'(t) = -\frac{b_i}{2\pi} \]
+with initial conditions:
+\[ (\alpha_1(0), \alpha_2(0), \alpha_3(0)) = (0.01694, 0.03375, 0.1176), \]
+in the following cases:
+\[ (b_1, b_2, b_3) = \begin{cases}
+(41/10, -19/6, -7)\\
+(33/5, 1, -3)
+\end{cases}
+ \]
+</p>
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #ff79c6;">def</span> <span style="color: #50fa7b;">derivative</span>(alpha, time, b):
+    <span style="color: #ff79c6;">return</span> -b/(<span style="color: #bd93f9; font-weight: bold;">2</span>*np.pi)
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #ff79c6;">def</span> <span style="color: #50fa7b;">solve</span>(init_alpha, b, time_domain=np.linspace(<span style="color: #bd93f9; font-weight: bold;">4.5</span>,<span style="color: #bd93f9; font-weight: bold;">50</span>,<span style="color: #bd93f9; font-weight: bold;">1000</span>)):
+    coordinates = odeint(derivative, init_alpha, time_domain, args=(b,))
+    <span style="color: #ff79c6;">return</span> coordinates
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ipython">alphas_0 = [<span style="color: #bd93f9; font-weight: bold;">0.01694</span>, <span style="color: #bd93f9; font-weight: bold;">0.03375</span>, <span style="color: #bd93f9; font-weight: bold;">0.1176</span>]
+b_std_model = [<span style="color: #bd93f9; font-weight: bold;">4</span>/<span style="color: #bd93f9; font-weight: bold;">10</span>, -<span style="color: #bd93f9; font-weight: bold;">19</span>/<span style="color: #bd93f9; font-weight: bold;">6</span>, -<span style="color: #bd93f9; font-weight: bold;">7</span>]
+b_mssm = [<span style="color: #bd93f9; font-weight: bold;">33</span>/<span style="color: #bd93f9; font-weight: bold;">5</span>, <span style="color: #bd93f9; font-weight: bold;">1</span>, -<span style="color: #bd93f9; font-weight: bold;">3</span>]
+
+alphas_std_model = [<span style="color: #bd93f9; font-weight: bold;">0</span>]*<span style="color: #bd93f9; font-weight: bold;">3</span>
+alphas_mssm = [<span style="color: #bd93f9; font-weight: bold;">0</span>]*<span style="color: #bd93f9; font-weight: bold;">3</span>
+
+chars = ((<span style="color: #f1fa8c;">'k-'</span>, <span style="color: #f1fa8c;">'alpha 1'</span>), (<span style="color: #f1fa8c;">'b-'</span>, <span style="color: #f1fa8c;">'alpha 2'</span>), (<span style="color: #f1fa8c;">'g-'</span>, <span style="color: #f1fa8c;">'alpha 3'</span>))
+plt.figure(figsize=(<span style="color: #bd93f9; font-weight: bold;">15</span>,<span style="color: #bd93f9; font-weight: bold;">4</span>))
+
+<span style="color: #ff79c6;">for</span> i <span style="color: #ff79c6;">in</span> <span style="color: #ffb86c;">range</span>(<span style="color: #bd93f9; font-weight: bold;">3</span>):
+    alphas_std_model[i] = solve(<span style="color: #bd93f9; font-weight: bold;">1</span>/alphas_0[i], b_std_model[i])
+    alphas_mssm[i] = solve(<span style="color: #bd93f9; font-weight: bold;">1</span>/alphas_0[i], b_mssm[i])
+
+    plt.subplot(<span style="color: #bd93f9; font-weight: bold;">121</span>)
+    plt.plot(np.linspace(<span style="color: #bd93f9; font-weight: bold;">4.5</span>,<span style="color: #bd93f9; font-weight: bold;">50</span>,<span style="color: #bd93f9; font-weight: bold;">1000</span>), alphas_std_model[i], chars[i][<span style="color: #bd93f9; font-weight: bold;">0</span>], label=chars[i][<span style="color: #bd93f9; font-weight: bold;">1</span>])
+    plt.legend()
+    plt.grid()
+
+    plt.subplot(<span style="color: #bd93f9; font-weight: bold;">122</span>)
+    plt.plot(np.linspace(<span style="color: #bd93f9; font-weight: bold;">4.5</span>,<span style="color: #bd93f9; font-weight: bold;">60</span>,<span style="color: #bd93f9; font-weight: bold;">1000</span>), alphas_mssm[i], chars[i][<span style="color: #bd93f9; font-weight: bold;">0</span>], label=chars[i][<span style="color: #bd93f9; font-weight: bold;">1</span>])
+    plt.legend()
+    plt.grid()
+
+plt.show()
+</pre>
+</div>
+
+
+<div id="orgacf4592" class="figure">
+<p><object type="image/svg+xml" data="./obipy-resources/MkXRfR.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Juan David Salcedo Hernández</p>
+<p class="date">Created: 2021-10-24 Sun 21:02</p>
+<p class="creator"><a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.5)</p>
+</div>
+</body>
+</html>

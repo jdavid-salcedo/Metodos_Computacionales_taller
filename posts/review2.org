@@ -22,7 +22,7 @@ import matplotlib.pyplot as plt
 
 #+RESULTS:
 :results:
-# Out[2]:
+# Out[527]:
 :end:
 Read some random dataframe with rocket launcher data.
 #+begin_src ipython :session asession :exports both :results raw drawer :display text/org :post test_org_post_clean(data=*this*)
@@ -33,7 +33,7 @@ tabulate(df, headers='keys', tablefmt='orgtbl', showindex='always')
 
 #+RESULTS:
 :results:
-# Out[14]:
+# Out[528]:
 |    |      M0 |   g |   mdot |    u |
 |----+---------+-----+--------+------|
 |  0 | 2.8e+06 | 9.8 |  10000 | 2510 |
@@ -52,7 +52,7 @@ df.apply(lambda column :
 
 #+RESULTS:
 :results:
-# Out[15]:
+# Out[529]:
 [mdot]
 :end:
 Testing convergence of the Newton-Raphson method for finding roots in this specific case
@@ -67,8 +67,8 @@ plt.show()
 
 #+RESULTS:
 :results:
-# Out[18]:
-[[file:./obipy-resources/GI7vMU.svg]]
+# Out[530]:
+[[file:./obipy-resources/OA1Dft.svg]]
 :end:
 Notice that the root value is less than 150, setting such a value as our initial guess will thus suffice:
 #+begin_src ipython :session asession :exports both :results raw drawer :display text/org :post test_org_post_clean(data=*this*)
@@ -79,7 +79,7 @@ tabulate(df, headers='keys', tablefmt='orgtbl', showindex='always')
 
 #+RESULTS:
 :results:
-# Out[19]:
+# Out[531]:
 |    |      M0 |   g |   mdot |    u |        t |
 |----+---------+-----+--------+------+----------|
 |  0 | 2.8e+06 | 9.8 |  10000 | 2510 | 135.831  |
@@ -103,8 +103,8 @@ plt.show()
 
 #+RESULTS:
 :results:
-# Out[20]:
-[[file:./obipy-resources/u4altL.svg]]
+# Out[532]:
+[[file:./obipy-resources/4N5Fp9.svg]]
 :end:
 * Something
 #+begin_src ipython :session asession :exports both :results raw drawer :display text/org :post test_org_post_clean(data=*this*)
@@ -116,7 +116,7 @@ tabulate(chipo.head(), headers='keys', tablefmt='orgtbl', showindex='always')
 
 #+RESULTS:
 :results:
-# Out[4]:
+# Out[533]:
 |    |   order_id |   quantity | item_name                             | choice_description                                                         | item_price   |
 |----+------------+------------+---------------------------------------+----------------------------------------------------------------------------+--------------|
 |  0 |          1 |          1 | Chips and Fresh Tomato Salsa          | nan                                                                        | $2.39        |
@@ -133,7 +133,7 @@ tabulate(chipo.head(), headers='keys', tablefmt='orgtbl', showindex='always')
 
 #+RESULTS:
 :results:
-# Out[59]:
+# Out[534]:
 |    |   order_id |   quantity | item_name                             | choice_description                                                         |   item_price |
 |----+------------+------------+---------------------------------------+----------------------------------------------------------------------------+--------------|
 |  0 |          1 |          1 | Chips and Fresh Tomato Salsa          | nan                                                                        |         2.39 |
@@ -149,7 +149,7 @@ len( greater_than_10.index )
 
 #+RESULTS:
 :results:
-# Out[60]:
+# Out[535]:
 1130
 :end:
 #+begin_src ipython :session asession :exports both :results raw drawer :display text/org :post test_org_post_clean(data=*this*)
@@ -158,7 +158,7 @@ chipo['item_name'].sort_values()
 
 #+RESULTS:
 :results:
-# Out[61]:
+# Out[536]:
 #+BEGIN_EXAMPLE
   3389    6 Pack Soft Drink
   341     6 Pack Soft Drink
@@ -181,7 +181,7 @@ tabulate(chipo[['item_name','item_price']].head(), headers='keys', tablefmt='org
 
 #+RESULTS:
 :results:
-# Out[13]:
+# Out[537]:
 |    | item_name                             |   item_price |
 |----+---------------------------------------+--------------|
 |  0 | Chips and Fresh Tomato Salsa          |         2.39 |
@@ -198,7 +198,7 @@ max_price['quantity'].sum()
 
 #+RESULTS:
 :results:
-# Out[23]:
+# Out[538]:
 15
 :end:
 #+begin_src ipython :session asession :exports both :results raw drawer :display text/org :post test_org_post_clean(data=*this*)
@@ -208,6 +208,6 @@ veggie['quantity'].sum()
 
 #+RESULTS:
 :results:
-# Out[26]:
+# Out[539]:
 18
 :end:
