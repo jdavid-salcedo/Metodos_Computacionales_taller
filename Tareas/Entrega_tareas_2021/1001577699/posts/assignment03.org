@@ -11,7 +11,7 @@ import matplotlib.pylab as plt
 
 #+RESULTS:
 :results:
-# Out[1]:
+# Out[418]:
 :end:
 
 * Alternating exponential function
@@ -41,7 +41,7 @@ exp(-0.5, tolerance=1E-16), 1/exp(0.5, tolerance=1E-16), np.exp(-0.5)
 
 #+RESULTS:
 :results:
-# Out[7]:
+# Out[419]:
 : (0.6065306597126326, 0.6065306597126339, 0.6065306597126334)
 :end:
 
@@ -71,8 +71,8 @@ view_cancellations((-0.5,-1,-10,-20, -50, -80))
 
 #+RESULTS:
 :results:
-# Out[16]:
-[[file:./obipy-resources/kA57eq.svg]]
+# Out[420]:
+[[file:./obipy-resources/ou3wPy.svg]]
 :end:
 
 Note that the first method exhibits a remarkable oscillatory behaviour that eventually converges to a single value, provided that the number of iterations is enough to cancel out the large numbers yielded by certain partial sums. However, notice that convergence fails for numbers whose absolute value is near the number of iterations.
@@ -100,8 +100,8 @@ error_vs_n((-0.5, -1, -10, -20, -50, -80))
 
 #+RESULTS:
 :results:
-# Out[14]:
-[[file:./obipy-resources/YuPFHF.svg]]
+# Out[421]:
+[[file:./obipy-resources/rD9Lfy.svg]]
 :end:
 
 Tying in with what has been noted thus far, we see that the absolute error (with respect to the value that arises from the ~numpy~ library) rises for partial sums around a number that is close to the absolute of the argument.
@@ -159,7 +159,7 @@ print( abs(1 - s_1(1583)/s_3(1583)), abs(1 - s_2(1583)/s_3(1583)) )
 
 #+RESULTS:
 :results:
-# Out[52]:
+# Out[422]:
 :end:
 
 Then we may analise what happens to these results as we increase the number of iterations. The ~visualize_convergence~ routine establishes a sway of viewing some partial sums for this series as we increase the values of $N$, that is, the number of terms.
@@ -201,8 +201,8 @@ visualize_convergence()
 
 #+RESULTS:
 :results:
-# Out[94]:
-[[file:./obipy-resources/tDZyI7.svg]]
+# Out[423]:
+[[file:./obipy-resources/Wak4LX.svg]]
 :end:
 
 Notice that our three methods guarantee the convergence of the sum to a value which is slightly greater than 0.30.
@@ -247,8 +247,8 @@ visualize_error()
 
 #+RESULTS:
 :results:
-# Out[95]:
-[[file:./obipy-resources/bZu5nb.svg]]
+# Out[424]:
+[[file:./obipy-resources/ig2oMj.svg]]
 :end:
 
 As expected, the error rises as more and more terms are added to these sequences; although they do so quite erratically. This is of course, due to the fact that the operations whereby the summation is computed implicitly involve an error that build up as the values get larger.
@@ -302,7 +302,7 @@ while ( i <= 2 ) :
 
 #+RESULTS:
 :results:
-# Out[2]:
+# Out[425]:
 :end:
 
 Finally, we can put it all together in a plot, which is going to show the differences that arise in these implementations.
@@ -337,8 +337,8 @@ plot()
 
 #+RESULTS:
 :results:
-# Out[93]:
-[[file:./obipy-resources/szqboK.svg]]
+# Out[426]:
+[[file:./obipy-resources/wi0mbg.svg]]
 :end:
 
 Notice how the graphs for them differ for values of N greater than 50, this is once again given by the fact that different opperations carried out by the machine are bound to different errors. The behaviour pointed out by this graph is just a consequence thereof.

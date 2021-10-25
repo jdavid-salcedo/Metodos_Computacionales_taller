@@ -27,7 +27,7 @@ def factorial(n) :
 
 #+RESULTS: python-factorial
 :results:
-# Out[1]:
+# Out[399]:
 :end:
 
 We may now evaluate the factorial function for some values:
@@ -77,7 +77,7 @@ def div_list(n) :
 
 #+RESULTS: divisors
 :results:
-# Out[5]:
+# Out[401]:
 :end:
 
 In order to decide whether a given positive integer abides by the definition of semi-perfect, we must regard what is known as the subset sum problem, viz., we must tell if given an arbitrary set of positive integers, we can extract some subset of it such that the sum of its elements yields a fixed value. In our particular case, we must evaluate subsets of the set of divisors of a number.
@@ -141,7 +141,7 @@ def is_semiperfect(m) :
 
 #+RESULTS: semiperfect
 :results:
-# Out[6]:
+# Out[402]:
 :end:
 
 The following are just trivial definitions.
@@ -170,7 +170,7 @@ def is_perfect(n, div_sum) :
 
 #+RESULTS: easy-statements
 :results:
-# Out[7]:
+# Out[403]:
 :end:
 
 Finally, it all comes together:
@@ -204,7 +204,7 @@ def kind_of_number(a,b) :
 
 #+RESULTS: kind
 :results:
-# Out[8]:
+# Out[404]:
 :end:
 
 Execution example:
@@ -216,6 +216,14 @@ kind_of_number(220,284)
 #+end_src
 
 #+RESULTS:
+40 is abundant
+12 is abundant
+40 is semi-perfect
+12 is semi-perfect
+220 and 284 are amicable
+284 is defective
+220 is abundant
+220 is semi-perfect
 40 is abundant
 12 is abundant
 40 is semi-perfect
@@ -247,6 +255,9 @@ palindrome(3333333), palindrome(2323), palindrome(1111349111111)
 #+end_src
 
 #+RESULTS:
+True
+False
+False
 True
 False
 False
@@ -293,6 +304,8 @@ string('perro'), string('murcielago')
 #+RESULTS:
 [False, 2, 3, 'orrep']
 [False, 5, 5, 'ogaleicrum']
+[False, 2, 3, 'orrep']
+[False, 5, 5, 'ogaleicrum']
 
 * The Fibonacci sequence
 
@@ -321,6 +334,8 @@ fib(50), fib(63)
 #+end_src
 
 #+RESULTS:
+12586269025
+6557470319842
 12586269025
 6557470319842
 
@@ -377,4 +392,5 @@ print(alist)
 #+end_src
 
 #+RESULTS:
+[11, 12, 12, 12, 22, 22, 23, 31, 32, 41, 42, 44, 232]
 [11, 12, 12, 12, 22, 22, 23, 31, 32, 41, 42, 44, 232].

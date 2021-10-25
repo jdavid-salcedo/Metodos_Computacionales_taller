@@ -15,7 +15,7 @@ from tabulate import tabulate
 
 #+RESULTS:
 :results:
-# Out[2]:
+# Out[472]:
 :end:
 #+NAME: test_org_post_clean
 #+BEGIN_SRC sh :results verbatim :var data="" :results output
@@ -104,7 +104,7 @@ def adjugate_matrix(A):
 
 #+RESULTS:
 :results:
-# Out[170]:
+# Out[473]:
 :end:
 #+begin_src ipython :session asession :results raw drawer :exports both
 A = np.array([[1,2,3,4,1],
@@ -117,7 +117,7 @@ la.inv(A) * determinant(A)
 
 #+RESULTS:
 :results:
-# Out[187]:
+# Out[474]:
 #+BEGIN_EXAMPLE
   array([[  60.,  -60.,  -30.,   30.,   15.],
   [  32.,   18.,  -46.,   16.,    3.],
@@ -133,7 +133,7 @@ adjugate_matrix(A)
 
 #+RESULTS:
 :results:
-# Out[188]:
+# Out[475]:
 #+BEGIN_EXAMPLE
   array([[  60.,  -60.,  -30.,   30.,   15.],
   [  32.,   18.,  -46.,   16.,    3.],
@@ -171,7 +171,7 @@ A*B
 
 #+RESULTS:
 :results:
-# Out[262]:
+# Out[476]:
 #+BEGIN_EXAMPLE
   array([[30., 36., 42.],
   [66., 81., 96.]])
@@ -190,7 +190,7 @@ A @ B
 
 #+RESULTS:
 :results:
-# Out[263]:
+# Out[477]:
 #+BEGIN_EXAMPLE
   array([[30, 36, 42],
   [66, 81, 96]])
@@ -250,7 +250,7 @@ def is_diagonalizable(T):
 
 #+RESULTS:
 :results:
-# Out[29]:
+# Out[478]:
 :end:
 #+begin_src ipython :session asession :results raw drawer :exports both
 # This matrix is diagonalisable
@@ -266,7 +266,7 @@ is_diagonalizable(A)[0], is_diagonalizable(B)[0]
 
 #+RESULTS:
 :results:
-# Out[30]:
+# Out[479]:
 : (True, False)
 :end:
 Thus we can proceed to compute the
@@ -297,7 +297,7 @@ tabulate(df.head(10), headers='keys', tablefmt='orgtbl', showindex='always')
 
 #+RESULTS:
 :results:
-# Out[31]:
+# Out[480]:
 |    |       x |       y |       z |
 |----+---------+---------+---------|
 |  0 | 1       | 1       | 2       |
@@ -348,8 +348,8 @@ plt.show()
 
 #+RESULTS:
 :results:
-# Out[33]:
-[[file:./obipy-resources/3kkGzj.svg]]
+# Out[481]:
+[[file:./obipy-resources/eU6BL3.svg]]
 :end:
 
 Compare these plots with the ones obtained from the expanded equations:
@@ -401,8 +401,8 @@ plt.show()
 
 #+RESULTS:
 :results:
-# Out[37]:
-[[file:./obipy-resources/yGcLt1.svg]]
+# Out[482]:
+[[file:./obipy-resources/ndXIwv.svg]]
 :end:
 
 * Encryption
@@ -434,7 +434,7 @@ def decrypt(crypt_msg, crypt_mat, abc, num):
 
 #+RESULTS:
 :results:
-# Out[236]:
+# Out[483]:
 :end:
 
 #+begin_src ipython :session asession :results raw drawer :exports both
@@ -456,7 +456,7 @@ crypt_msg = [47,49,-19,257,487,10,-9,63,137,236, 79,142,-184,372,536,59,70,-40,3
 
 #+RESULTS:
 :results:
-# Out[240]:
+# Out[484]:
 :end:
 #+begin_src ipython :session asession :results raw drawer :exports both
 decrypt(crypt_msg, crypt_mat, abc, num)
@@ -464,6 +464,6 @@ decrypt(crypt_msg, crypt_mat, abc, num)
 
 #+RESULTS:
 :results:
-# Out[242]:
+# Out[485]:
 : 'are you having fun  '
 :end:

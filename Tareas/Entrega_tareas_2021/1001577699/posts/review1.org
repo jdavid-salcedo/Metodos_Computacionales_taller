@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 
 #+RESULTS:
 :results:
-# Out[131]:
+# Out[515]:
 :end:
 * Finding the area of a circular section
 Suppose that we have a circle of radius $a$; we wish to use numerical methods to
@@ -52,7 +52,7 @@ df.head()
 
 #+RESULTS:
 :results:
-# Out[132]:
+# Out[516]:
 #+BEGIN_EXAMPLE
   thetas        fs
   0 -6.283185 -3.926991
@@ -72,8 +72,8 @@ plt.show()
 
 #+RESULTS:
 :results:
-# Out[133]:
-[[file:./obipy-resources/DwsTIt.svg]]
+# Out[517]:
+[[file:./obipy-resources/3og9hS.svg]]
 :end:
 
 We thus see that the root is in some subinterval of $[0,4]$, let us use the
@@ -85,7 +85,7 @@ root
 
 #+RESULTS:
 :results:
-# Out[134]:
+# Out[518]:
 : 2.3098814600100823
 :end:
 Therefore, whenever the angle is approximately 2.31 radians, the area of the
@@ -112,7 +112,7 @@ params = (v0, u, alpha, theta, b, g)
 
 #+RESULTS:
 :results:
-# Out[7]:
+# Out[519]:
 :end:
 Now we write the expressions for the standard position coordinates in 2D space.
 #+begin_src ipython :session asession :results raw drawer
@@ -125,7 +125,7 @@ def y(t, v0, u, alpha, theta, b, g) :
 
 #+RESULTS:
 :results:
-# Out[8]:
+# Out[520]:
 :end:
 We can explicitly compute each position coordinate from an arbitrary set of
 positive time parameters $t$.
@@ -146,7 +146,7 @@ df.head()
 
 #+RESULTS:
 :results:
-# Out[16]:
+# Out[521]:
 #+BEGIN_EXAMPLE
   t         X         Y
   0  0.00000  0.000000  0.000000
@@ -189,8 +189,8 @@ plt.show()
 
 #+RESULTS:
 :results:
-# Out[17]:
-[[file:./obipy-resources/6werTl.svg]]
+# Out[522]:
+[[file:./obipy-resources/tLFHHK.svg]]
 :end:
 
 In order to find the maximum range, we must take $y(\bar t) = 0$, solve for $\bar t$, and evaluate $x(\bar t)$.
@@ -203,7 +203,7 @@ max_range
 
 #+RESULTS:
 :results:
-# Out[20]:
+# Out[523]:
 : 239.60614945520726
 :end:
 We can plot this point to see that it properly approximates the projectile's range.
@@ -216,8 +216,8 @@ plt.show()
 
 #+RESULTS:
 :results:
-# Out[24]:
-[[file:./obipy-resources/Faheg2.svg]]
+# Out[524]:
+[[file:./obipy-resources/dAJrba.svg]]
 :end:
 Now that we have gained some insight into this problem, we may get the maximum
 range as a function of the launch angle, so that we can see how the system
@@ -258,7 +258,7 @@ class windProjectile :
 
 #+RESULTS:
 :results:
-# Out[17]:
+# Out[525]:
 :end:
 #+begin_src ipython :session asession :exports both :results raw drawer
 v0 = 60 # m/s; initial projectile speed
@@ -278,6 +278,6 @@ ls.max_range()
 
 #+RESULTS:
 :results:
-# Out[18]:
-[[file:./obipy-resources/UtergQ.svg]]
+# Out[526]:
+[[file:./obipy-resources/wyFj2w.svg]]
 :end:

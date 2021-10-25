@@ -1,0 +1,346 @@
+#+TITLE: Review4
+#+SETUPFILE: ~/Desktop/Metodos_Computacionales_taller/Tareas/Entrega_tareas_2021/1001577699/org-html-themes/org/theme-readtheorg-local.setup
+
+#+begin_src ipython :session asession :results raw drawer :exports both
+%config InlineBackend.figure_format = 'svg'
+
+from scipy.integrate import odeint
+import numpy as np
+import matplotlib.pyplot as plt
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[687]:
+:end:
+
+* The elastic pendulum
+Consider a spring with rest length $l_0$, which oscillates with an angle $\theta(t)$.
+
+The equations of motion for this system are:
+\[ x''(t) = (l_0 + x(t)) \theta'(t)^2 - \frac{k}{m} x(t) + g \cos \theta(t) \]
+along with
+\[ \theta''(t) = -\frac{g}{l_0 + x(t)}\sin\theta - \frac{2x'(t)}{l_0 + x(t)}\theta'(t) \]
+
+Of course, we can define our generalised coordinates as follows:
+\[ \begin{pmatrix} x(t) \\ \theta(t) \\ x'(t) \\ \theta'(x) \end{pmatrix}. \]
+Which readily allows us to obtain:
+#+begin_src ipython :session asession :results raw drawer :exports both
+g = 9.8
+def derivatives(generalized_coordinates, time, nat_len, elastic_k, mass):
+
+    pos, ampl, vel, ang_vel = generalized_coordinates
+
+    # derivatives for each generalized coordinate tuple
+    derivatives = [vel, ang_vel,
+                   (nat_len + pos)*ang_vel**2 - (elastic_k/mass)*pos + g*np.cos(ampl),
+                   -(g*np.sin(ampl) + 2*vel*ang_vel)/(nat_len + pos)]
+    return derivatives
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[688]:
+:end:
+#+begin_src ipython :session asession :results raw drawer :exports both
+def solve(init_pos, init_ampl, init_vel, init_ang_vel,
+          nat_len, elastic_k, mass, time_domain=np.linspace(0,30,1000),
+          full_output=False):
+
+    init_state = [init_pos, init_ampl, init_vel, init_ang_vel]
+    params = nat_len, elastic_k, mass
+
+    generalized_coordinates = odeint(derivatives, init_state, time_domain, args=params)
+    positions = generalized_coordinates[:,0]
+    amplitudes = generalized_coordinates[:,1]
+    velocities = generalized_coordinates[:,2]
+    angular_velocities = generalized_coordinates[:,3]
+
+    # get standard coordinates
+    x_coords = (nat_len + positions)*np.sin(amplitudes)
+    y_coords = -(nat_len + positions)*np.cos(amplitudes)
+
+    if not full_output:
+        return x_coords, y_coords
+    else:
+        return positions, amplitudes, velocities, angular_velocities
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[689]:
+:end:
+#+begin_src ipython :session asession :results raw drawer :exports both
+x, y = solve(init_pos=1, init_ampl=0.3, init_vel=0, init_ang_vel=0,
+             nat_len=1, elastic_k=4, mass=0.5,
+             time_domain=np.linspace(0,40,1000))
+
+plt.plot(x, y, 'k-')
+plt.xlabel('$x(t)$')
+plt.ylabel('$y(t)$')
+plt.grid()
+plt.show()
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[690]:
+[[file:./obipy-resources/oVaW7d.svg]]
+:end:
+** Configuration manifold
+We shall plot the configuration manifold in the space of generalised coordinates:
+#+begin_src ipython :session asession :results raw drawer :exports both
+def config_manifold(nat_len, elastic_k, mass,
+                    max_pos=1, min_ampl=-np.pi/2, max_ampl=np.pi/2,
+                    min_vel=-1, max_vel=1, min_ang_vel=-1,
+                    max_ang_vel=1, n=100):
+
+    init_positions = np.random.uniform(0,max_pos,n)
+    init_amplitudes = np.random.uniform(min_ampl,max_ampl,n)
+    init_velocities = np.random.uniform(min_vel,max_vel,n)
+    init_ang_velocities = np.random.uniform(min_ang_vel,max_ang_vel,n)
+
+    ampl_coords = list()
+    ang_vel_coords = list()
+    for pos, ampl, vel, ang_vel in zip(init_positions, init_amplitudes,
+                                       init_velocities, init_ang_velocities):
+        positions, amplitudes, velocities, angular_velocities = solve(pos, ampl, vel, ang_vel,
+                                                                      nat_len, elastic_k, mass,
+                                                                      time_domain=np.linspace(0,30,10000),
+                                                                      full_output=True)
+        ampl_coords.append(amplitudes)
+        ang_vel_coords.append(angular_velocities)
+    return ampl_coords, ang_vel_coords
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[691]:
+:end:
+#+begin_src ipython :session asession :results raw drawer :exports both
+amplitudes, ang_velocities = config_manifold(nat_len=1, elastic_k=4, mass=0.5)
+for i in range(len(amplitudes)-1):
+    plt.plot(amplitudes[i], ang_velocities[i], 'b-', lw=0.2)
+plt.xlabel('$\theta(t)$')
+plt.ylabel('$\omega(t)$')
+plt.grid()
+plt.show()
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[692]:
+[[file:./obipy-resources/e40ZPj.svg]]
+:end:
+
+* Linear algebra
+Consider a diagonalisable 3 by 3 real matrix A. We may define a particular diagonal matrix $A_\text{diag}$ as
+\[ P A_\text{diag} = A U\]
+where $P$ is a permutation matrix (its effect is just changing the order of $A_\text{diag}$'s columns). Our objective is to find some "mixing angles" provided a descending order of the eigenvalues in $A_\text{diag}.$
+#+begin_src ipython :session asession :results raw drawer :exports both
+def mixing_angles(M):
+    # Notice that the matrix is NORMAl, which is to say that there exists an isometry U such that A_diag = U A U^{-1};
+    # the square of the eigenvalues of such matrices are the eigenvalues of themselves multiplied by their transpose,
+    # the order does not matter
+    squared_eigvals, eigvecs = np.linalg.eig(M.T @ M)
+    eigvals = np.sort(np.sqrt(squared_eigvals))[::-1]
+
+    ordered_columns = squared_eigvals.argsort()[::-1]
+    ordered_eigvecs = np.c_[tuple(eigvecs[:,i] for i in ordered_columns)]
+
+    # mixing angles
+    ang_13 = np.arcsin(ordered_eigvecs[0,2])
+    ang_12 = np.arcsin(ordered_eigvecs[0,1]/np.cos(ang_13))
+    ang_23 = np.arcsin(ordered_eigvecs[1,2]/np.cos(ang_13))
+
+    return {'eigenvalues': list(eigvals), 'mixing angles': list(map(np.rad2deg, [ang_12, ang_13, ang_23]))}
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[693]:
+:end:
+
+#+begin_src ipython :session asession :results raw drawer :exports both
+M = np.array([[7.778162746217654799e+00, -7.662363998929994757e+00,  1.337296616780795588e+00],
+            [2.121317112604814703e+00,  2.088449805848296759e+00, -3.720095646918017973e-01],
+            [6.981313463593235256e-03,  6.945916527427932197e-01,  3.939225012258420922e+00]])
+
+mixing_angles(M)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[694]:
+#+BEGIN_EXAMPLE
+  {'eigenvalues': [11.0, 3.9999999999999996, 3.0000000000000004],
+  'mixing angles': [0.1414212126396247, -44.999912733626005, -79.9000001523084]}
+#+END_EXAMPLE
+:end:
+#+begin_src ipython :session asession :results raw drawer :exports both
+P, diag, U_adjoint = np.linalg.svd(M)
+np.rad2deg(np.arcsin(U_adjoint[0,2]))
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[695]:
+: -6.982860079088258
+:end:
+
+* Configuration manifold for a spring with friction
+We have the following differential equation:
+\[ -kx(t) - bx'(t) = mx''(t) \]
+Hence:
+#+begin_src ipython :session asession :results raw drawer :exports both
+def derivatives(generalized_coordinates, time, elastic_k, mass, friction_param):
+
+    pos, vel = generalized_coordinates
+
+    # derivatives for each generalized coordinate tuple
+    derivatives = [vel, (1/mass)*(-elastic_k*pos - friction_param*vel)]
+    return derivatives
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[696]:
+:end:
+
+#+begin_src ipython :session asession :results raw drawer :exports both
+def solve(init_pos, init_vel, elastic_k, mass, friction_param,
+          time_domain=np.linspace(0,30,1000)):
+
+    init_state = [init_pos, init_vel]
+    params = elastic_k, mass, friction_param
+
+    generalized_coordinates = odeint(derivatives, init_state, time_domain, args=params)
+    positions = generalized_coordinates[:,0]
+    velocities = generalized_coordinates[:,1]
+
+    return positions, velocities
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[697]:
+:end:
+#+begin_src ipython :session asession :results raw drawer :exports both
+def config_manifold(elastic_k=1, mass=1, friction_param=1/3, min_pos=-1, max_pos=1,
+                    min_vel=-1, max_vel=1, n=100):
+
+    init_positions = np.random.uniform(min_pos,max_pos,n)
+    init_velocities = np.random.uniform(min_vel,max_vel,n)
+
+    pos_coords = list()
+    vel_coords = list()
+    for pos, vel in zip(init_positions, init_velocities):
+        positions, velocities = solve(pos, vel, elastic_k, mass, friction_param)
+        pos_coords.append(positions)
+        vel_coords.append(velocities)
+
+    return pos_coords, vel_coords
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[698]:
+:end:
+
+#+begin_src ipython :session asession :results raw drawer :exports both
+positions, velocities = config_manifold()
+for i in range(len(positions)-1):
+    plt.plot(positions[i], velocities[i], 'k-', lw=0.3)
+plt.xlabel('$x(t)$')
+plt.ylabel('$v(t)$')
+plt.grid()
+plt.show()
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[699]:
+[[file:./obipy-resources/7fs8O8.svg]]
+:end:
+Less mass, no friction at all
+#+begin_src ipython :session asession :results raw drawer :exports both
+positions, velocities = config_manifold(mass=0.2, friction_param=0)
+for i in range(len(positions)-1):
+    plt.plot(positions[i], velocities[i], 'k-', lw=0.3)
+plt.xlabel('$x(t)$')
+plt.ylabel('$v(t)$')
+plt.grid()
+plt.show()
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[700]:
+[[file:./obipy-resources/Xxp2bO.svg]]
+:end:
+
+* More differential equations
+Solve for $\alpha_i$, $i = 1, 2, 3:$
+\[ ({\alpha_i}^{-1})'(t) = -\frac{b_i}{2\pi} \]
+with initial conditions:
+\[ (\alpha_1(0), \alpha_2(0), \alpha_3(0)) = (0.01694, 0.03375, 0.1176), \]
+in the following cases:
+\[ (b_1, b_2, b_3) = \begin{cases}
+(41/10, -19/6, -7)\\
+(33/5, 1, -3)
+\end{cases}
+ \]
+#+begin_src ipython :session asession :results raw drawer :exports both
+def derivative(alpha, time, b):
+    return -b/(2*np.pi)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[701]:
+:end:
+
+#+begin_src ipython :session asession :results raw drawer :exports both
+def solve(init_alpha, b, time_domain=np.linspace(4.5,50,1000)):
+    coordinates = odeint(derivative, init_alpha, time_domain, args=(b,))
+    return coordinates
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[702]:
+:end:
+
+#+begin_src ipython :session asession :results raw drawer :exports both
+alphas_0 = [0.01694, 0.03375, 0.1176]
+b_std_model = [4/10, -19/6, -7]
+b_mssm = [33/5, 1, -3]
+
+alphas_std_model = [0]*3
+alphas_mssm = [0]*3
+
+chars = (('k-', 'alpha 1'), ('b-', 'alpha 2'), ('g-', 'alpha 3'))
+plt.figure(figsize=(15,4))
+
+for i in range(3):
+    alphas_std_model[i] = solve(1/alphas_0[i], b_std_model[i])
+    alphas_mssm[i] = solve(1/alphas_0[i], b_mssm[i])
+
+    plt.subplot(121)
+    plt.plot(np.linspace(4.5,50,1000), alphas_std_model[i], chars[i][0], label=chars[i][1])
+    plt.legend()
+    plt.grid()
+
+    plt.subplot(122)
+    plt.plot(np.linspace(4.5,60,1000), alphas_mssm[i], chars[i][0], label=chars[i][1])
+    plt.legend()
+    plt.grid()
+
+plt.show()
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[703]:
+[[file:./obipy-resources/bxTtH5.svg]]
+:end:

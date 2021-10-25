@@ -14,7 +14,7 @@ import scipy.optimize as optimize
 
 #+RESULTS:
 :results:
-# Out[15]:
+# Out[540]:
 :end:
 #+NAME: test_org_post_clean
 #+BEGIN_SRC sh :results verbatim :var data="" :results output
@@ -35,7 +35,7 @@ tabulate(df.head(), headers='keys', tablefmt='orgtbl', showindex='always')
 
 #+RESULTS:
 :results:
-# Out[13]:
+# Out[541]:
 |    |         t |          x |   xerror |
 |----+-----------+------------+----------|
 |  0 | 0         | -0         |    1e-08 |
@@ -77,7 +77,7 @@ def compare_models(functions, _t, _x, _xerror=None):
 
 #+RESULTS:
 :results:
-# Out[86]:
+# Out[542]:
 :end:
 #+begin_src ipython :session asession :results raw drawer :exports both
 # define our datapoints
@@ -98,6 +98,6 @@ compare_models(functions, _t, _x, _xerror=_xerror)
 
 #+RESULTS:
 :results:
-# Out[89]:
+# Out[543]:
 : {b'_harmonic': 6.154342270279314e-08, b'_free_fall': 0.04000247638415919}
 :end:

@@ -13,7 +13,7 @@ from scipy.optimize import fmin_powell
 
 #+RESULTS:
 :results:
-# Out[5]:
+# Out[486]:
 :end:
 
 * Simple pendulum problem
@@ -26,7 +26,7 @@ th_f = np.deg2rad(10)
 
 #+RESULTS:
 :results:
-# Out[247]:
+# Out[487]:
 :end:
 
 We define the lagrangian of the system, which is equal to the quantity
@@ -60,7 +60,7 @@ action([1,2,3,4])
 
 #+RESULTS:
 :results:
-# Out[257]:
+# Out[488]:
 : 7.238087883494
 :end:
 
@@ -77,9 +77,9 @@ path(50)
 
 #+RESULTS:
 :results:
-# Out[263]:
+# Out[489]:
 #+BEGIN_EXAMPLE
-  array([0. , 0.00559656, 0.01118722, 0.01676634, 0.02232795,
+  array([0.        , 0.00559656, 0.01118722, 0.01676634, 0.02232795,
   0.02786655, 0.03337642, 0.03885188, 0.04428761, 0.0496777 ,
   0.05501686, 0.06029933, 0.06551943, 0.07067203, 0.07575125,
   0.08075244, 0.08567029, 0.09049991, 0.09523704, 0.09987613,
@@ -121,8 +121,8 @@ _graph
 
 #+RESULTS:
 :results:
-# Out[277]:
-[[file:./obipy-resources/Y5ERnN.svg]]
+# Out[490]:
+[[file:./obipy-resources/pOaG01.svg]]
 :end:
 #+begin_src ipython :session asession :results raw drawer :exports both
 def energy(m=0.2, l=1, g=9.8):
@@ -143,8 +143,8 @@ energy()
 
 #+RESULTS:
 :results:
-# Out[284]:
-[[file:./obipy-resources/z42DKR.svg]]
+# Out[491]:
+[[file:./obipy-resources/crRAXq.svg]]
 :end:
 
 * Mass attached to a spring
@@ -181,7 +181,7 @@ _action([1,2,3,4])
 
 #+RESULTS:
 :results:
-# Out[35]:
+# Out[492]:
 : 3.986249271332106
 :end:
 #+begin_src ipython :session asession :results raw drawer :exports both
@@ -196,7 +196,7 @@ _path(51)
 
 #+RESULTS:
 :results:
-# Out[36]:
+# Out[493]:
 #+BEGIN_EXAMPLE
   array([0.707106  , 0.72896324, 0.74992768, 0.77043328, 0.79009548,
   0.80897771, 0.82703792, 0.84429362, 0.86070009, 0.87626238,
@@ -237,8 +237,8 @@ _graph
 
 #+RESULTS:
 :results:
-# Out[37]:
-[[file:./obipy-resources/y4gsZw.svg]]
+# Out[494]:
+[[file:./obipy-resources/yPSUVs.svg]]
 :end:
 
 #+begin_src ipython :session asession :results raw drawer :exports both
@@ -260,8 +260,8 @@ energy()
 
 #+RESULTS:
 :results:
-# Out[39]:
-[[file:./obipy-resources/8Aj2bh.svg]]
+# Out[495]:
+[[file:./obipy-resources/GEkU9L.svg]]
 :end:
 #+begin_src ipython :session asession :results raw drawer :exports both
 def position_derivatives(m=0.2, k=0.8):
@@ -284,8 +284,8 @@ position_derivatives()
 
 #+RESULTS:
 :results:
-# Out[40]:
-[[file:./obipy-resources/7HVwDT.svg]]
+# Out[496]:
+[[file:./obipy-resources/g99Pi1.svg]]
 :end:
 
 * Generalisation
@@ -373,7 +373,7 @@ class Lagrangian:
 
 #+RESULTS:
 :results:
-# Out[29]:
+# Out[497]:
 :end:
 
 We can make use of this newly defined class by defining the functions that
@@ -403,8 +403,8 @@ system.plot(50, energy_args=(1, 9.8, 1),
 
 #+RESULTS:
 :results:
-# Out[30]:
-[[file:./obipy-resources/cvnSGx.svg]]
+# Out[498]:
+[[file:./obipy-resources/82DvTx.svg]]
 :end:
 
 As before, we can build up the energy plot, so as to prove that it is conserved:
@@ -430,8 +430,8 @@ energy()
 
 #+RESULTS:
 :results:
-# Out[41]:
-[[file:./obipy-resources/oJtrLR.svg]]
+# Out[499]:
+[[file:./obipy-resources/vBBCSp.svg]]
 :end:
 Similarly:
 #+begin_src ipython :session asession :results raw drawer :exports both
@@ -457,6 +457,6 @@ system.plot(50, energy_args=(0.2, 0.8),
 
 #+RESULTS:
 :results:
-# Out[44]:
-[[file:./obipy-resources/3QsDT3.svg]]
+# Out[500]:
+[[file:./obipy-resources/zj3Gg0.svg]]
 :end:
