@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-10-24 Sun 20:47 -->
+<!-- 2021-10-26 Tue 16:25 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Coupled harmonic oscillators</title>
@@ -251,7 +251,13 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orge37ad89">1. \(N\) coupled harmonic oscillators: Normal modes</a></li>
+<li><a href="#orge37ad89">1. \(N\) coupled harmonic oscillators: Normal modes</a>
+<ul>
+<li><a href="#org24642cd">1.1. Theoretical considerations</a></li>
+<li><a href="#orge26b462">1.2. Numerical implementation</a></li>
+</ul>
+</li>
+<li><a href="#org652965c">2. Referenced</a></li>
 </ul>
 </div>
 </div>
@@ -268,6 +274,14 @@
 <div id="outline-container-orge37ad89" class="outline-2">
 <h2 id="orge37ad89"><span class="section-number-2">1</span> \(N\) coupled harmonic oscillators: Normal modes</h2>
 <div class="outline-text-2" id="text-1">
+</div>
+<div id="outline-container-org24642cd" class="outline-3">
+<h3 id="org24642cd"><span class="section-number-3">1.1</span> Theoretical considerations</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+(The following discussion is partially based on Spivak&rsquo;s book <a href="#orgc8cb651">Spvk</a>)
+</p>
+
 <p>
 Many physical systems can be thought of as a collection of oscillators
 influencing each other in potentially quite complex ways. Such behaviours can
@@ -299,7 +313,7 @@ anti-sync (\(x_1 = -x_2\)).
 
 <p>
 Synchronised motion leads to identical equations
-\[ {x_i}'' + {\omega_0}^2 x_i = 0, \]
+\[ {x_k}'' + {\omega_0}^2 x_k = 0, \]
 so that both pendulums have a frequency \(\omega_0\) with
 \[ x_1(t) = x_2(t) = a \cos \omega_0 t + b \sin \omega_0 t, \]
 for some real numbers \(a, b\).
@@ -328,31 +342,30 @@ x_2(t) = a \cos \omega_0 t + b \sin \omega_0 t - c \cos {\omega_0}^+ t - d \sin 
 \end{gather*}
 <p>
 with four arbitrary constants \(a,b,c,d\), will give us a solution with any
-desired initial conditions \(x_i(0), {x_i}'(0)\).
+desired initial conditions \(x_k(0), {x_k}'(0)\).
 </p>
 
 <p>
 Generalisations of these considerations to \(N\) harmonic oscillators, all
 interacting in a linear way, is easy. If we have \(n\) possibly different masses,
 \(m_i\) and lengths \(l_i\), by setting
-\[ K_i = \frac{\kappa}{m_i} \quad {\omega_i}^2 = \frac{g}{l_i}, \]
+\[ K_k = \frac{\kappa}{m_k} \quad {\omega_k}^2 = \frac{g}{l_k}, \]
 we should get \(N\) equations of the form
 </p>
 \begin{equation}
-{x_i}''(t) + {\omega_i}^2 x_i(t) = \sum_{l=1}^N a_{il}x_l, \quad i = 1,\ldots,N;
+{x_k}''(t) + {\omega_k}^2 x_k(t) = \sum_{l=1}^N a_{kl}x_l, \quad k = 1,\ldots,N;
 \end{equation}
 <p>
-where each \(a_{il}\) is some real number depending on some \(K_i\), and \(a_{il} =
-a_{li}\) because of Newton&rsquo;s third law.
+where each \(a_{il}\) is some real number depending on some \(K_k\).
 </p>
 
 <p>
 In this case, for a normal mode, we get complex solutions
-\[ x_i(t) = c_i e^{i\lambda t}, \quad i = 1,\ldots,N; \]
+\[ x_k(t) = c_k e^{i \lambda t}, \quad k = 1,\ldots,N; \]
 whose real part represnt the motion of the \(N\) oscillators. Hence we must have:
-\[ -\lambda^2 c_i e^{i\lambda t} + {\omega_i}^2 c_i e^{i\lambda t}  = \sum_{l=1}^N a_{il} c_l e^{i\lambda t}, \quad i = 1,\ldots,N; \]
+\[ -\lambda^2 c_k e^{i \lambda t} + {\omega_k}^2 c_k e^{i \lambda t}  = \sum_{l=1}^N a_{kl} c_l e^{i \lambda t}, \quad k = 1,\ldots,N; \]
 which can be rewritten as
-\[ -\lambda^2 c_i = \sum_{l=1}^N a_{il} c_l - c_i {\omega_i}^2, \quad i = 1,\ldots,N. \]
+\[ -\lambda^2 c_k = \sum_{l=1}^N a_{kl} c_l - c_k {\omega_k}^2, \quad k = 1,\ldots,N. \]
 In matrix form, this may be seen as
 \[ \lambda^2 \begin{pmatrix} c_1 \\ \vdots \\ c_N \end{pmatrix}
 = \left[ \begin{pmatrix} {\omega_1}^2 &  & 0 \\  & \ddots &  \\ 0 &  & {\omega_N}^2 \end{pmatrix} - \begin{pmatrix} a_{11} & \cdots & a_{1N} \\ \vdots & \ddots & \vdots \\ a_{N1} & \cdots & a_{NN} \end{pmatrix} \right] \begin{pmatrix} c_1 \\ \vdots \\ c_N \end{pmatrix}. \]
@@ -367,24 +380,26 @@ eigenvalues.
 
 <p>
 Notice that the aforementioned discussion was given in terms of arbitrary
-parameters \(a_{ij}\), yet we wish to address the particular case of \(n\)
+parameters \(a_{kl}\), yet we wish to address the particular case of \(n\)
 coupled pendulums. Luckily, we have the apparatus of Newton&rsquo;s second law, which
 will help us find the parameters that should be used in our equation.
 </p>
 
 <p>
-In our appriximation, we have
+Let us suppose that the separation between any three pendulums is the same and
+such that we can safely ignore any small inclination in the direction towards
+which the sping forces are oriented. With these considerations, we essentialy have
 </p>
 \begin{align*}
-F_{i,\text{springs}} &= \kappa(x_i - x_{i-1}) - \kappa(x_{i+1} - x_i), \\
-&= \kappa(-x_{i-1} + 2x_i - x_{i+1}).
+F_{k,\text{springs}} &= -\kappa(x_k - x_{k-1}) + \kappa(x_{k+1} - x_k), \\
+&= \kappa(x_{k-1} - 2x_k + x_{k+1}).
 \end{align*}
 <p>
 Thus equation (1) turns into
 </p>
 \begin{align*}
-{x_i}''(t) + {\omega_i}^2 x_i(t) &= \frac{\kappa}{m_i} (-x_{i-1} + 2x_i -x_{i+1}), \quad i = 1,\ldots,N, \\
-&:= K_i (-x_{i-1} + 2x_i -x_{i+1}), \quad i = 1,\ldots,N;
+{x_k}''(t) + {\omega_k}^2 x_k(t) &= \frac{\kappa}{m_k} (x_{k-1} - 2x_k + x_{k+1}), \quad k = 1,\ldots,N, \\
+&:= K_k (x_{k-1} - 2x_k + x_{k+1}), \quad k = 1,\ldots,N;
 \end{align*}
 <p>
 and so for a normal mode we have:
@@ -392,28 +407,44 @@ and so for a normal mode we have:
 = \left[ \begin{pmatrix} {\omega_1}^2 &  & 0 \\  & \ddots &  \\ 0 &  & {\omega_N}^2 \end{pmatrix} +
 \begin{pmatrix} 2K_1 & -K_1 & 0 & 0 & \cdots \\ -K_2 & 2K_2 & -K_2 & 0 & \cdots \\ 0 & -K_3 & 2K_3 & -K_3 & \cdots \\ \vdots & \vdots & \vdots & \vdots & \end{pmatrix} \right]
 \begin{pmatrix} c_1 \\ \vdots \\ c_N \end{pmatrix}. \]
-Hence we just need to solve the aforementioned eigenvalue problem with this matrix in particular.
+Hence we just need to solve the aforementioned eigenvalue problem with this
+matrix in particular.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge26b462" class="outline-3">
+<h3 id="orge26b462"><span class="section-number-3">1.2</span> Numerical implementation</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+We define a class that allows us to find the normal modes for a system of
+coupled pendulums, specified by the elastic constant, their masses, and the
+lengths of their pivots.
 </p>
 <div class="org-src-container">
 <pre class="src src-ipython">g = <span style="color: #bd93f9; font-weight: bold;">9.8</span>
 
 <span style="color: #ff79c6;">class</span> <span style="color: #bd93f9;">CoupledPendulums</span>:
-
     <span style="color: #ff79c6;">def</span> <span style="color: #50fa7b;">__init__</span>(<span style="color: #ff79c6;">self</span>, elastic_constant, masses, lengths):
+        <span style="color: #8995ba;">''' Initialise the system with the required attributes '''</span>
         <span style="color: #ff79c6;">if</span> <span style="color: #ffb86c;">len</span>(masses) != <span style="color: #ffb86c;">len</span>(lengths):
-            <span style="color: #ff79c6;">raise</span> <span style="color: #bd93f9;">ValueError</span>
+            <span style="color: #ff79c6;">raise</span> <span style="color: #bd93f9;">ValueError</span>(<span style="color: #f1fa8c;">'masses and lengths must have the same size'</span>)
         <span style="color: #ff79c6;">else</span>:
             <span style="color: #ff79c6;">self</span>.elastic_constant = elastic_constant
-            <span style="color: #ff79c6;">self</span>.masses = np.asarray(masses)
-            <span style="color: #ff79c6;">self</span>.lengths = np.asarray(lengths)
+            <span style="color: #ff79c6;">self</span>.masses = np.asarray(masses, dtype=<span style="color: #ffb86c;">float</span>)
+            <span style="color: #ff79c6;">self</span>.lengths = np.asarray(lengths, dtype=<span style="color: #ffb86c;">float</span>)
             <span style="color: #ff79c6;">self</span>.N = <span style="color: #ffb86c;">len</span>(masses)
 
     <span style="color: #ff79c6;">def</span> <span style="color: #50fa7b;">normal_modes_matrix</span>(<span style="color: #ff79c6;">self</span>):
+        <span style="color: #8995ba;">'''</span>
+<span style="color: #8995ba;">        Provided a system of coupled pendulums, returns the stiffness matrix,</span>
+<span style="color: #8995ba;">        whose eigenvalues and eigenvectors characterise the system's normal</span>
+<span style="color: #8995ba;">        modes</span>
+<span style="color: #8995ba;">        '''</span>
         K = <span style="color: #ff79c6;">self</span>.elastic_constant/<span style="color: #ff79c6;">self</span>.masses
         omega_squared = g/<span style="color: #ff79c6;">self</span>.lengths
 
         matrix = np.zeros((<span style="color: #ff79c6;">self</span>.N, <span style="color: #ff79c6;">self</span>.N), dtype=<span style="color: #ffb86c;">float</span>)
-        <span style="color: #6272a4;"># </span><span style="color: #6272a4;">there must be a better way to handle the exceptions here</span>
         <span style="color: #ff79c6;">for</span> i <span style="color: #ff79c6;">in</span> <span style="color: #ffb86c;">range</span>(<span style="color: #ff79c6;">self</span>.N):
             <span style="color: #ff79c6;">if</span> i-<span style="color: #bd93f9; font-weight: bold;">1</span> &lt; <span style="color: #bd93f9; font-weight: bold;">0</span>:
                 matrix[i,i] = K[i]
@@ -437,61 +468,90 @@ Hence we just need to solve the aforementioned eigenvalue problem with this matr
 
         <span style="color: #6272a4;"># </span><span style="color: #6272a4;">A list of N matrices of dimension N x len(time)</span>
         x_coords = np.zeros((<span style="color: #ff79c6;">self</span>.N, <span style="color: #ff79c6;">self</span>.N, <span style="color: #ffb86c;">len</span>(time_domain)))
+        y_coords = np.zeros((<span style="color: #ff79c6;">self</span>.N, <span style="color: #ff79c6;">self</span>.N, <span style="color: #ffb86c;">len</span>(time_domain)))
+        <span style="color: #6272a4;"># </span><span style="color: #6272a4;">Now we fill in the data</span>
         <span style="color: #ff79c6;">for</span> i <span style="color: #ff79c6;">in</span> <span style="color: #ffb86c;">range</span>(<span style="color: #ff79c6;">self</span>.N):
             <span style="color: #ff79c6;">for</span> j <span style="color: #ff79c6;">in</span> <span style="color: #ffb86c;">range</span>(<span style="color: #ff79c6;">self</span>.N):
-                 complex_exponential = amplitudes[i,j] * np.exp(<span style="color: #ffb86c;">complex</span>(<span style="color: #bd93f9; font-weight: bold;">0</span>,<span style="color: #bd93f9; font-weight: bold;">1</span>)*frequencies[i]*time_domain)
-                 x_coords[i,j] = complex_exponential.real
-        <span style="color: #ff79c6;">return</span> x_coords
-</pre>
-</div>
-
-<div class="org-src-container">
-<pre class="src src-ipython">time = np.linspace(<span style="color: #bd93f9; font-weight: bold;">0</span>,<span style="color: #bd93f9; font-weight: bold;">30</span>,<span style="color: #bd93f9; font-weight: bold;">500</span>)
-system = CoupledPendulums(<span style="color: #bd93f9; font-weight: bold;">1</span>, [<span style="color: #bd93f9; font-weight: bold;">5</span>]*<span style="color: #bd93f9; font-weight: bold;">5</span>, [<span style="color: #bd93f9; font-weight: bold;">1</span>]*<span style="color: #bd93f9; font-weight: bold;">5</span>)
-x_coords = system.normal_modes(time_domain=time)
-<span style="color: #6272a4;"># </span><span style="color: #6272a4;">M = system.normal_modes_matrix()</span>
-<span style="color: #6272a4;"># </span><span style="color: #6272a4;">a, b = np.linalg.eig(M)</span>
-<span style="color: #6272a4;"># </span><span style="color: #6272a4;">b.T</span>
+                complex_exponential = amplitudes[i,j] * \
+                    np.exp(<span style="color: #ffb86c;">complex</span>(<span style="color: #bd93f9; font-weight: bold;">0</span>,<span style="color: #bd93f9; font-weight: bold;">1</span>)*frequencies[i]*time_domain)
+                x_coords[i,j] = complex_exponential.real
+                y_coords[i,j] = <span style="color: #ff79c6;">self</span>.lengths[i] - \
+                    np.sqrt(<span style="color: #ff79c6;">self</span>.lengths[i]**<span style="color: #bd93f9; font-weight: bold;">2</span> - x_coords[i,j]**<span style="color: #bd93f9; font-weight: bold;">2</span>)
+        <span style="color: #ff79c6;">return</span> x_coords, y_coords
 </pre>
 </div>
 
 <p>
-For instance, we have the following normal mode:
+The above defined class can be used, in particular, to obtain the normal modes for
+a system of five pendulums:
 </p>
 <div class="org-src-container">
-<pre class="src src-ipython">plt.plot(time, x_coords[<span style="color: #bd93f9; font-weight: bold;">0</span>,<span style="color: #bd93f9; font-weight: bold;">0</span>])
-plt.plot(time, x_coords[<span style="color: #bd93f9; font-weight: bold;">0</span>,<span style="color: #bd93f9; font-weight: bold;">1</span>])
-plt.plot(time, x_coords[<span style="color: #bd93f9; font-weight: bold;">0</span>,<span style="color: #bd93f9; font-weight: bold;">2</span>])
-plt.plot(time, x_coords[<span style="color: #bd93f9; font-weight: bold;">0</span>,<span style="color: #bd93f9; font-weight: bold;">3</span>])
-plt.plot(time, x_coords[<span style="color: #bd93f9; font-weight: bold;">0</span>,<span style="color: #bd93f9; font-weight: bold;">4</span>])
-plt.xlim(<span style="color: #bd93f9; font-weight: bold;">0</span>,<span style="color: #bd93f9; font-weight: bold;">10</span>)
-plt.grid()
-plt.show()
+<pre class="src src-ipython">time = np.linspace(<span style="color: #bd93f9; font-weight: bold;">0</span>,<span style="color: #bd93f9; font-weight: bold;">30</span>,<span style="color: #bd93f9; font-weight: bold;">500</span>)
+system = CoupledPendulums(<span style="color: #bd93f9; font-weight: bold;">1</span>, [<span style="color: #bd93f9; font-weight: bold;">5</span>]*<span style="color: #bd93f9; font-weight: bold;">5</span>, [<span style="color: #bd93f9; font-weight: bold;">1</span>]*<span style="color: #bd93f9; font-weight: bold;">5</span>)
+x_coords, y_coords = system.normal_modes(time_domain=time)
+</pre>
+</div>
+
+<p>
+We have five normal modes, the first one of which is the following:
+</p>
+<div class="org-src-container">
+<pre class="src src-ipython">fig, axs = plt.subplots(<span style="color: #bd93f9; font-weight: bold;">5</span>,figsize=(<span style="color: #bd93f9; font-weight: bold;">15</span>,<span style="color: #bd93f9; font-weight: bold;">10</span>), tight_layout=<span style="color: #8be9fd;">True</span>)
+fig.suptitle(<span style="color: #f1fa8c;">'Normal modes'</span>)
+
+<span style="color: #ff79c6;">for</span> i <span style="color: #ff79c6;">in</span> <span style="color: #ffb86c;">range</span>(<span style="color: #bd93f9; font-weight: bold;">5</span>):
+    <span style="color: #ff79c6;">for</span> j <span style="color: #ff79c6;">in</span> <span style="color: #ffb86c;">range</span>(<span style="color: #bd93f9; font-weight: bold;">5</span>):
+        <span style="color: #6272a4;"># </span><span style="color: #6272a4;">ax = fig.add_subplot(4, 2, i+1)</span>
+        axs[i].plot(time, x_coords[i,j])
+        axs[i].set_xlabel(<span style="color: #f1fa8c;">'Time'</span>)
+        axs[i].set_ylabel(<span style="color: #f1fa8c;">'Displacement'</span>)
+        axs[i].grid()
 </pre>
 </div>
 
 
-<div id="orgf037c29" class="figure">
-<p><object type="image/svg+xml" data="./obipy-resources/ME0iJw.svg" class="org-svg">
+<div id="org36db2ca" class="figure">
+<p><object type="image/svg+xml" data="./obipy-resources/m7OfmT.svg" class="org-svg">
 Sorry, your browser does not support SVG.</object>
 </p>
 </div>
 
+<p>
+We now present an animation of the normal modes for the aforementioned five-mass
+configuration. Of course, the approximation we allowed ourselves to use in
+previous computations becomes more reasonable as the distance between the masses
+increases, but for visualisation purposes alone we&rsquo;ve laid out our pendulums
+with a rather small separation between them.
+</p>
 <div class="org-src-container">
 <pre class="src src-ipython"><span style="color: #ff79c6;">from</span> matplotlib <span style="color: #ff79c6;">import</span> animation
 
 N = <span style="color: #ffb86c;">len</span>(time)
 dt = time[<span style="color: #bd93f9; font-weight: bold;">1</span>] - time[<span style="color: #bd93f9; font-weight: bold;">0</span>]
 
-fig, (ax1, ax2, ax3, ax4, ax5) = plt.subplots(<span style="color: #bd93f9; font-weight: bold;">5</span>,<span style="color: #bd93f9; font-weight: bold;">1</span>, figsize=(<span style="color: #bd93f9; font-weight: bold;">8</span>,<span style="color: #bd93f9; font-weight: bold;">12</span>))
+fig, (ax1, ax2, ax3, ax4, ax5) = plt.subplots(<span style="color: #bd93f9; font-weight: bold;">5</span>,<span style="color: #bd93f9; font-weight: bold;">1</span>, figsize=(<span style="color: #bd93f9; font-weight: bold;">13</span>,<span style="color: #bd93f9; font-weight: bold;">12</span>))
+fig.suptitle(<span style="color: #f1fa8c;">'Normal modes'</span>)
+<span style="color: #6272a4;"># </span><span style="color: #6272a4;">We initialise the arrays containing oscillators, lines, and springs. These are</span>
+<span style="color: #6272a4;"># </span><span style="color: #6272a4;">matrices, where the rows represent the possible normal modes (frames), and the</span>
+<span style="color: #6272a4;"># </span><span style="color: #6272a4;">columns represent the amount of objects (oscillators, lines, or springs) in</span>
+<span style="color: #6272a4;"># </span><span style="color: #6272a4;">each frame. Of course, in this case, there are five frames with five</span>
+<span style="color: #6272a4;"># </span><span style="color: #6272a4;">oscillators, five lines, and four connecting springs</span>
 oscillators = np.zeros((<span style="color: #bd93f9; font-weight: bold;">5</span>,<span style="color: #bd93f9; font-weight: bold;">5</span>), dtype=<span style="color: #ffb86c;">object</span>)
-<span style="color: #6272a4;"># </span><span style="color: #6272a4;">lines = np.zeros((5,5), dtype=object)</span>
+lines = np.zeros((<span style="color: #bd93f9; font-weight: bold;">5</span>,<span style="color: #bd93f9; font-weight: bold;">5</span>), dtype=<span style="color: #ffb86c;">object</span>)
+springs = np.zeros((<span style="color: #bd93f9; font-weight: bold;">5</span>,<span style="color: #bd93f9; font-weight: bold;">4</span>), dtype=<span style="color: #ffb86c;">object</span>)
+
 <span style="color: #ff79c6;">for</span> i, axis <span style="color: #ff79c6;">in</span> <span style="color: #ffb86c;">enumerate</span>([ax1, ax2, ax3, ax4, ax5]):
     <span style="color: #ff79c6;">for</span> j <span style="color: #ff79c6;">in</span> <span style="color: #ffb86c;">range</span>(<span style="color: #bd93f9; font-weight: bold;">5</span>):
-        oscillators[i,j], = axis.plot([], [], lw=<span style="color: #bd93f9; font-weight: bold;">0</span>, ms=<span style="color: #bd93f9; font-weight: bold;">20</span>, marker=<span style="color: #f1fa8c;">'s'</span>, mfc=<span style="color: #f1fa8c;">'gray'</span>, fillstyle=<span style="color: #f1fa8c;">'full'</span>, mec=<span style="color: #f1fa8c;">'black'</span>, markevery=<span style="color: #bd93f9; font-weight: bold;">2</span>)
-        <span style="color: #6272a4;"># </span><span style="color: #6272a4;">lines[i,j], = axis.plot([], [], lw=1, color='r')</span>
+        oscillators[i,j], = axis.plot([], [], lw=<span style="color: #bd93f9; font-weight: bold;">0</span>, ms=<span style="color: #bd93f9; font-weight: bold;">20</span>, marker=<span style="color: #f1fa8c;">'o'</span>, mfc=<span style="color: #f1fa8c;">'gray'</span>, fillstyle=<span style="color: #f1fa8c;">'full'</span>, mec=<span style="color: #f1fa8c;">'black'</span>, markevery=<span style="color: #bd93f9; font-weight: bold;">2</span>)
+        lines[i,j], = axis.plot([], [], lw=<span style="color: #bd93f9; font-weight: bold;">1</span>, color=<span style="color: #f1fa8c;">'k'</span>)
+        <span style="color: #ff79c6;">try</span>:
+            springs[i,j], = axis.plot([], [], lw=<span style="color: #bd93f9; font-weight: bold;">1</span>, color=<span style="color: #f1fa8c;">'k'</span>)
+        <span style="color: #ff79c6;">except</span> <span style="color: #bd93f9;">IndexError</span>:
+            <span style="color: #ff79c6;">continue</span>
 
-    axis.set_xlim(-<span style="color: #bd93f9; font-weight: bold;">10</span>, <span style="color: #bd93f9; font-weight: bold;">50</span>)
+    axis.axis(<span style="color: #f1fa8c;">'equal'</span>)
+    axis.set_ylim(-<span style="color: #bd93f9; font-weight: bold;">0.5</span>, y_coords.<span style="color: #ffb86c;">max</span>()+<span style="color: #bd93f9; font-weight: bold;">1</span>)
+    axis.set_xlim(-<span style="color: #bd93f9; font-weight: bold;">1</span>, <span style="color: #bd93f9; font-weight: bold;">9</span>)
     axis.set_xlabel(<span style="color: #f1fa8c;">'x'</span>)
     axis.set_ylabel(<span style="color: #f1fa8c;">'y'</span>)
 
@@ -500,38 +560,61 @@ oscillators = np.zeros((<span style="color: #bd93f9; font-weight: bold;">5</span
     <span style="color: #ff79c6;">for</span> i <span style="color: #ff79c6;">in</span> <span style="color: #ffb86c;">range</span>(<span style="color: #bd93f9; font-weight: bold;">5</span>):
         <span style="color: #ff79c6;">for</span> j <span style="color: #ff79c6;">in</span> <span style="color: #ffb86c;">range</span>(<span style="color: #bd93f9; font-weight: bold;">5</span>):
             oscillators[i,j].set_data([], [])
-            <span style="color: #6272a4;"># </span><span style="color: #6272a4;">lines[i,j].set_data([], [])</span>
+            lines[i,j].set_data([], [])
+            <span style="color: #ff79c6;">try</span>:
+                springs[i,j].set_data([],[])
+                <span style="color: #ff79c6;">yield</span> springs[i,j]
+            <span style="color: #ff79c6;">except</span>:
+                <span style="color: #ff79c6;">continue</span>
+
+            <span style="color: #ff79c6;">yield</span> lines[i,j]
             <span style="color: #ff79c6;">yield</span> oscillators[i,j]
-    <span style="color: #6272a4;"># </span><span style="color: #6272a4;">return [oscillators[i,j] for i in range(5) for j in range(5)], [lines[i,j] for i in range(5) for j in range(5)]</span>
 
 <span style="color: #ff79c6;">def</span> <span style="color: #50fa7b;">animate</span>(k):
-    distance = <span style="color: #bd93f9; font-weight: bold;">10</span>
+    <span style="color: #6272a4;"># </span><span style="color: #6272a4;">distance between the oscillators</span>
+    distance = <span style="color: #bd93f9; font-weight: bold;">2</span>
     <span style="color: #ff79c6;">for</span> i <span style="color: #ff79c6;">in</span> <span style="color: #ffb86c;">range</span>(<span style="color: #bd93f9; font-weight: bold;">5</span>):
         <span style="color: #ff79c6;">for</span> j <span style="color: #ff79c6;">in</span> <span style="color: #ffb86c;">range</span>(<span style="color: #bd93f9; font-weight: bold;">5</span>):
-            oscillators[i,j].set_data([distance*j + x_coords[i,j,k],<span style="color: #bd93f9; font-weight: bold;">0</span>], [<span style="color: #bd93f9; font-weight: bold;">0</span>,<span style="color: #bd93f9; font-weight: bold;">0</span>])
-            <span style="color: #6272a4;"># </span><span style="color: #6272a4;">lines[i,j].set_data(time[:k], x_coords[i,j][:k])</span>
+            oscillators[i,j].set_data([distance*j + x_coords[i,j,k], <span style="color: #bd93f9; font-weight: bold;">0</span>], [y_coords[i,j,k], <span style="color: #bd93f9; font-weight: bold;">0</span>])
+            lines[i,j].set_data([distance*j, distance*j + x_coords[i,j,k]], [<span style="color: #bd93f9; font-weight: bold;">1</span>, y_coords[i,j,k]])
+            <span style="color: #ff79c6;">try</span>:
+                springs[i,j].set_data([distance*j + x_coords[i,j,k], distance*(j+<span style="color: #bd93f9; font-weight: bold;">1</span>) + x_coords[i,j+<span style="color: #bd93f9; font-weight: bold;">1</span>,k]], [y_coords[i,j,k], y_coords[i,j+<span style="color: #bd93f9; font-weight: bold;">1</span>,k]])
+                <span style="color: #ff79c6;">yield</span> springs[i,j]
+            <span style="color: #ff79c6;">except</span>:
+                <span style="color: #ff79c6;">continue</span>
+
+            <span style="color: #ff79c6;">yield</span> lines[i,j]
             <span style="color: #ff79c6;">yield</span> oscillators[i,j]
-    <span style="color: #6272a4;"># </span><span style="color: #6272a4;">return [oscillators[i,j] for i in range(5) for j in range(5)], [lines[i,j] for i in range(5) for j in range(5)]</span>
 
 ani = animation.FuncAnimation(fig, animate, np.arange(<span style="color: #bd93f9; font-weight: bold;">1</span>, N),
                               interval=<span style="color: #bd93f9; font-weight: bold;">50</span>, blit=<span style="color: #8be9fd;">True</span>, init_func=init_animation,repeat=<span style="color: #8be9fd;">False</span>)
 plt.close()
 
-ani.save(<span style="color: #f1fa8c;">'./media/pendulums.mp4'</span>, fps=<span style="color: #bd93f9; font-weight: bold;">20</span>)
+ani.save(<span style="color: #f1fa8c;">'./media/pendulums.gif'</span>, fps=<span style="color: #bd93f9; font-weight: bold;">20</span>)
 </pre>
 </div>
 
 
-<div id="org56f9467" class="figure">
+<div id="orgfb220b9" class="figure">
 <p><img src="./media/pendulums.gif" alt="pendulums.gif" />
 </p>
 </div>
 </div>
 </div>
 </div>
+
+<div id="outline-container-org652965c" class="outline-2">
+<h2 id="org652965c"><span class="section-number-2">2</span> Referenced</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+<a id="orgc8cb651"></a> Spivak, Michael. Physics for mathematicians: Mechanics I. Publish or Perish, 2010.
+</p>
+</div>
+</div>
+</div>
 <div id="postamble" class="status">
 <p class="author">Author: Juan David Salcedo Hernández</p>
-<p class="date">Created: 2021-10-24 Sun 20:47</p>
+<p class="date">Created: 2021-10-26 Tue 16:25</p>
 <p class="creator"><a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.5)</p>
 </div>
 </body>

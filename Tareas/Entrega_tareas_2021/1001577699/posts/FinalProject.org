@@ -12,10 +12,13 @@ import numpy.linalg as la
 
 #+RESULTS:
 :results:
-# Out[510]:
+# Out[1]:
 :end:
 
 * $N$ coupled harmonic oscillators: Normal modes
+** Theoretical considerations
+(The following discussion is partially based on Spivak's book [[spivak][Spvk]])
+
 Many physical systems can be thought of as a collection of oscillators
 influencing each other in potentially quite complex ways. Such behaviours can
 certainly arise, even in one of the simplest such systems, namely, two pendulums
@@ -39,7 +42,7 @@ solutions thereof, where the pendulums either move in sync ($x_1 = x_2$) or in
 anti-sync ($x_1 = -x_2$).
 
 Synchronised motion leads to identical equations
-\[ {x_i}'' + {\omega_0}^2 x_i = 0, \]
+\[ {x_k}'' + {\omega_0}^2 x_k = 0, \]
 so that both pendulums have a frequency $\omega_0$ with
 \[ x_1(t) = x_2(t) = a \cos \omega_0 t + b \sin \omega_0 t, \]
 for some real numbers $a, b$.
@@ -62,25 +65,24 @@ x_1(t) = a \cos \omega_0 t + b \sin \omega_0 t + c \cos {\omega_0}^+ t + d \sin 
 x_2(t) = a \cos \omega_0 t + b \sin \omega_0 t - c \cos {\omega_0}^+ t - d \sin {\omega_0}^+ t,
 \end{gather*}
 with four arbitrary constants $a,b,c,d$, will give us a solution with any
-desired initial conditions $x_i(0), {x_i}'(0)$.
+desired initial conditions $x_k(0), {x_k}'(0)$.
 
 Generalisations of these considerations to $N$ harmonic oscillators, all
 interacting in a linear way, is easy. If we have $n$ possibly different masses,
 $m_i$ and lengths $l_i$, by setting
-\[ K_i = \frac{\kappa}{m_i} \quad {\omega_i}^2 = \frac{g}{l_i}, \]
+\[ K_k = \frac{\kappa}{m_k} \quad {\omega_k}^2 = \frac{g}{l_k}, \]
 we should get $N$ equations of the form
 \begin{equation}
-{x_i}''(t) + {\omega_i}^2 x_i(t) = \sum_{l=1}^N a_{il}x_l, \quad i = 1,\ldots,N;
+{x_k}''(t) + {\omega_k}^2 x_k(t) = \sum_{l=1}^N a_{kl}x_l, \quad k = 1,\ldots,N;
 \end{equation}
-where each $a_{il}$ is some real number depending on some $K_i$, and $a_{il} =
-a_{li}$ because of Newton's third law.
+where each $a_{il}$ is some real number depending on some $K_k$.
 
 In this case, for a normal mode, we get complex solutions
-\[ x_i(t) = c_i e^{i\lambda t}, \quad i = 1,\ldots,N; \]
+\[ x_k(t) = c_k e^{i \lambda t}, \quad k = 1,\ldots,N; \]
 whose real part represnt the motion of the $N$ oscillators. Hence we must have:
-\[ -\lambda^2 c_i e^{i\lambda t} + {\omega_i}^2 c_i e^{i\lambda t}  = \sum_{l=1}^N a_{il} c_l e^{i\lambda t}, \quad i = 1,\ldots,N; \]
+\[ -\lambda^2 c_k e^{i \lambda t} + {\omega_k}^2 c_k e^{i \lambda t}  = \sum_{l=1}^N a_{kl} c_l e^{i \lambda t}, \quad k = 1,\ldots,N; \]
 which can be rewritten as
-\[ -\lambda^2 c_i = \sum_{l=1}^N a_{il} c_l - c_i {\omega_i}^2, \quad i = 1,\ldots,N. \]
+\[ -\lambda^2 c_k = \sum_{l=1}^N a_{kl} c_l - c_k {\omega_k}^2, \quad k = 1,\ldots,N. \]
 In matrix form, this may be seen as
 \[ \lambda^2 \begin{pmatrix} c_1 \\ \vdots \\ c_N \end{pmatrix}
 = \left[ \begin{pmatrix} {\omega_1}^2 &  & 0 \\  & \ddots &  \\ 0 &  & {\omega_N}^2 \end{pmatrix} - \begin{pmatrix} a_{11} & \cdots & a_{1N} \\ \vdots & \ddots & \vdots \\ a_{N1} & \cdots & a_{NN} \end{pmatrix} \right] \begin{pmatrix} c_1 \\ \vdots \\ c_N \end{pmatrix}. \]
@@ -93,46 +95,58 @@ diagonalisable, and that there exists a basis of eigenvectors with real
 eigenvalues.
 
 Notice that the aforementioned discussion was given in terms of arbitrary
-parameters $a_{ij}$, yet we wish to address the particular case of $n$
+parameters $a_{kl}$, yet we wish to address the particular case of $n$
 coupled pendulums. Luckily, we have the apparatus of Newton's second law, which
 will help us find the parameters that should be used in our equation.
 
-In our appriximation, we have
+Let us suppose that the separation between any three pendulums is the same and
+such that we can safely ignore any small inclination in the direction towards
+which the sping forces are oriented. With these considerations, we essentialy have
 \begin{align*}
-F_{i,\text{springs}} &= \kappa(x_i - x_{i-1}) - \kappa(x_{i+1} - x_i), \\
-&= \kappa(-x_{i-1} + 2x_i - x_{i+1}).
+F_{k,\text{springs}} &= -\kappa(x_k - x_{k-1}) + \kappa(x_{k+1} - x_k), \\
+&= \kappa(x_{k-1} - 2x_k + x_{k+1}).
 \end{align*}
 Thus equation (1) turns into
 \begin{align*}
-{x_i}''(t) + {\omega_i}^2 x_i(t) &= \frac{\kappa}{m_i} (-x_{i-1} + 2x_i -x_{i+1}), \quad i = 1,\ldots,N, \\
-&:= K_i (-x_{i-1} + 2x_i -x_{i+1}), \quad i = 1,\ldots,N;
+{x_k}''(t) + {\omega_k}^2 x_k(t) &= \frac{\kappa}{m_k} (x_{k-1} - 2x_k + x_{k+1}), \quad k = 1,\ldots,N, \\
+&:= K_k (x_{k-1} - 2x_k + x_{k+1}), \quad k = 1,\ldots,N;
 \end{align*}
 and so for a normal mode we have:
 \[ \lambda^2 \begin{pmatrix} c_1 \\ \vdots \\ c_N \end{pmatrix}
 = \left[ \begin{pmatrix} {\omega_1}^2 &  & 0 \\  & \ddots &  \\ 0 &  & {\omega_N}^2 \end{pmatrix} +
 \begin{pmatrix} 2K_1 & -K_1 & 0 & 0 & \cdots \\ -K_2 & 2K_2 & -K_2 & 0 & \cdots \\ 0 & -K_3 & 2K_3 & -K_3 & \cdots \\ \vdots & \vdots & \vdots & \vdots & \end{pmatrix} \right]
 \begin{pmatrix} c_1 \\ \vdots \\ c_N \end{pmatrix}. \]
-Hence we just need to solve the aforementioned eigenvalue problem with this matrix in particular.
+Hence we just need to solve the aforementioned eigenvalue problem with this
+matrix in particular.
+
+** Numerical implementation
+We define a class that allows us to find the normal modes for a system of
+coupled pendulums, specified by the elastic constant, their masses, and the
+lengths of their pivots.
 #+begin_src ipython :session asession :results raw drawer :exports both
 g = 9.8
 
 class CoupledPendulums:
-
     def __init__(self, elastic_constant, masses, lengths):
+        ''' Initialise the system with the required attributes '''
         if len(masses) != len(lengths):
-            raise ValueError
+            raise ValueError('masses and lengths must have the same size')
         else:
             self.elastic_constant = elastic_constant
-            self.masses = np.asarray(masses)
-            self.lengths = np.asarray(lengths)
+            self.masses = np.asarray(masses, dtype=float)
+            self.lengths = np.asarray(lengths, dtype=float)
             self.N = len(masses)
 
     def normal_modes_matrix(self):
+        '''
+        Provided a system of coupled pendulums, returns the stiffness matrix,
+        whose eigenvalues and eigenvectors characterise the system's normal
+        modes
+        '''
         K = self.elastic_constant/self.masses
         omega_squared = g/self.lengths
 
         matrix = np.zeros((self.N, self.N), dtype=float)
-        # there must be a better way to handle the exceptions here
         for i in range(self.N):
             if i-1 < 0:
                 matrix[i,i] = K[i]
@@ -156,65 +170,89 @@ class CoupledPendulums:
 
         # A list of N matrices of dimension N x len(time)
         x_coords = np.zeros((self.N, self.N, len(time_domain)))
+        y_coords = np.zeros((self.N, self.N, len(time_domain)))
+        # Now we fill in the data
         for i in range(self.N):
             for j in range(self.N):
-                 complex_exponential = amplitudes[i,j] * np.exp(complex(0,1)*frequencies[i]*time_domain)
-                 x_coords[i,j] = complex_exponential.real
-        return x_coords
+                complex_exponential = amplitudes[i,j] * \
+                    np.exp(complex(0,1)*frequencies[i]*time_domain)
+                x_coords[i,j] = complex_exponential.real
+                y_coords[i,j] = self.lengths[i] - \
+                    np.sqrt(self.lengths[i]**2 - x_coords[i,j]**2)
+        return x_coords, y_coords
 #+end_src
 
 #+RESULTS:
 :results:
-# Out[511]:
+# Out[2]:
 :end:
-
+The above defined class can be used, in particular, to obtain the normal modes for
+a system of five pendulums:
 #+begin_src ipython :session asession :results raw drawer :exports both
 time = np.linspace(0,30,500)
 system = CoupledPendulums(1, [5]*5, [1]*5)
-x_coords = system.normal_modes(time_domain=time)
-# M = system.normal_modes_matrix()
-# a, b = np.linalg.eig(M)
-# b.T
+x_coords, y_coords = system.normal_modes(time_domain=time)
 #+end_src
 
 #+RESULTS:
 :results:
-# Out[512]:
+# Out[214]:
 :end:
 
-For instance, we have the following normal mode:
+We have five normal modes, the first one of which is the following:
 #+begin_src ipython :session asession :results raw drawer :exports both
-plt.plot(time, x_coords[0,0])
-plt.plot(time, x_coords[0,1])
-plt.plot(time, x_coords[0,2])
-plt.plot(time, x_coords[0,3])
-plt.plot(time, x_coords[0,4])
-plt.xlim(0,10)
-plt.grid()
-plt.show()
+fig, axs = plt.subplots(5,figsize=(15,10), tight_layout=True)
+fig.suptitle('Normal modes')
+
+for i in range(5):
+    for j in range(5):
+        # ax = fig.add_subplot(4, 2, i+1)
+        axs[i].plot(time, x_coords[i,j])
+        axs[i].set_xlabel('Time')
+        axs[i].set_ylabel('Displacement')
+        axs[i].grid()
 #+end_src
 
 #+RESULTS:
 :results:
-# Out[513]:
-[[file:./obipy-resources/LGVSc6.svg]]
+# Out[215]:
+[[file:./obipy-resources/duVrJK.svg]]
 :end:
 
+We now present an animation of the normal modes for the aforementioned five-mass
+configuration. Of course, the approximation we allowed ourselves to use in
+previous computations becomes more reasonable as the distance between the masses
+increases, but for visualisation purposes alone we've laid out our pendulums
+with a rather small separation between them.
 #+begin_src ipython :session asession :results raw drawer :exports both
 from matplotlib import animation
 
 N = len(time)
 dt = time[1] - time[0]
 
-fig, (ax1, ax2, ax3, ax4, ax5) = plt.subplots(5,1, figsize=(8,12))
+fig, (ax1, ax2, ax3, ax4, ax5) = plt.subplots(5,1, figsize=(13,12))
+fig.suptitle('Normal modes')
+# We initialise the arrays containing oscillators, lines, and springs. These are
+# matrices, where the rows represent the possible normal modes (frames), and the
+# columns represent the amount of objects (oscillators, lines, or springs) in
+# each frame. Of course, in this case, there are five frames with five
+# oscillators, five lines, and four connecting springs
 oscillators = np.zeros((5,5), dtype=object)
-# lines = np.zeros((5,5), dtype=object)
+lines = np.zeros((5,5), dtype=object)
+springs = np.zeros((5,4), dtype=object)
+
 for i, axis in enumerate([ax1, ax2, ax3, ax4, ax5]):
     for j in range(5):
-        oscillators[i,j], = axis.plot([], [], lw=0, ms=20, marker='s', mfc='gray', fillstyle='full', mec='black', markevery=2)
-        # lines[i,j], = axis.plot([], [], lw=1, color='r')
+        oscillators[i,j], = axis.plot([], [], lw=0, ms=20, marker='o', mfc='gray', fillstyle='full', mec='black', markevery=2)
+        lines[i,j], = axis.plot([], [], lw=1, color='k')
+        try:
+            springs[i,j], = axis.plot([], [], lw=1, color='k')
+        except IndexError:
+            continue
 
-    axis.set_xlim(-10, 50)
+    axis.axis('equal')
+    axis.set_ylim(-0.5, y_coords.max()+1)
+    axis.set_xlim(-1, 9)
     axis.set_xlabel('x')
     axis.set_ylabel('y')
 
@@ -223,28 +261,44 @@ def init_animation():
     for i in range(5):
         for j in range(5):
             oscillators[i,j].set_data([], [])
-            # lines[i,j].set_data([], [])
+            lines[i,j].set_data([], [])
+            try:
+                springs[i,j].set_data([],[])
+                yield springs[i,j]
+            except:
+                continue
+
+            yield lines[i,j]
             yield oscillators[i,j]
-    # return [oscillators[i,j] for i in range(5) for j in range(5)], [lines[i,j] for i in range(5) for j in range(5)]
 
 def animate(k):
-    distance = 10
+    # distance between the oscillators
+    distance = 2
     for i in range(5):
         for j in range(5):
-            oscillators[i,j].set_data([distance*j + x_coords[i,j,k],0], [0,0])
-            # lines[i,j].set_data(time[:k], x_coords[i,j][:k])
+            oscillators[i,j].set_data([distance*j + x_coords[i,j,k], 0], [y_coords[i,j,k], 0])
+            lines[i,j].set_data([distance*j, distance*j + x_coords[i,j,k]], [1, y_coords[i,j,k]])
+            try:
+                springs[i,j].set_data([distance*j + x_coords[i,j,k], distance*(j+1) + x_coords[i,j+1,k]], [y_coords[i,j,k], y_coords[i,j+1,k]])
+                yield springs[i,j]
+            except:
+                continue
+
+            yield lines[i,j]
             yield oscillators[i,j]
-    # return [oscillators[i,j] for i in range(5) for j in range(5)], [lines[i,j] for i in range(5) for j in range(5)]
 
 ani = animation.FuncAnimation(fig, animate, np.arange(1, N),
                               interval=50, blit=True, init_func=init_animation,repeat=False)
 plt.close()
 
-ani.save('./media/pendulums.mp4', fps=20)
+ani.save('./media/pendulums.gif', fps=20)
 #+end_src
 
 #+RESULTS:
 :results:
-# Out[514]:
+# Out[216]:
 :end:
 [[file:./media/pendulums.gif]]
+
+* Referenced
+<<spivak>> Spivak, Michael. Physics for mathematicians: Mechanics I. Publish or Perish, 2010.
