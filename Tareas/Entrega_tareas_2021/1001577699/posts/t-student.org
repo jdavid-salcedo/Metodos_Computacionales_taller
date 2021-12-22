@@ -1,0 +1,141 @@
+#+TITLE: Application of confidence intervals: Measurement of the gravitational acceleration
+
+Usual python libraries for data analysis:
+#+begin_src ipython :session asession :results raw drawer
+%config InlineBackend.figure_format = 'svg'
+
+import numpy as np
+from scipy import stats
+import matplotlib.pyplot as plt
+plt.rc('axes', axisbelow=True)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[85]:
+:end:
+
+#+begin_src ipython :session asession :results raw drawer
+# label decorator function
+def label(function):
+    def wrapper(*args, xlabel='Event', ylabel='Frequency'):
+        plt.xlabel(xlabel)
+        plt.ylabel(ylabel)
+        function(*args)
+    return wrapper
+
+def confidence_interval(uncertainty, deg_freedom, mean, std_error):
+    t_value = stats.t.interval(1-uncertainty, deg_freedom)[1]
+    up_low_lim = t_value*std_error
+    return up_low_lim
+
+class GravityMeasurements:
+    def __init__(self, times_array, height):
+        self.times_array = np.asarray(times_array)
+        self.gravity_array = 2*height/(self.times_array**2)
+
+        # standard properties of the array
+        self.length = len(self.gravity_array)
+        self.mean_time = np.mean(times_array)
+
+    @label
+    def residuals(self):
+        residuals = self.times_array - self.mean_time
+        data_scope = np.arange(self.length) # the x-aixs in the residuals chart
+
+        plt.scatter(data_scope, residuals, edgecolors='k',
+                    color='gainsboro')
+        plt.plot(data_scope, np.zeros((self.length,)), 'k--')
+        plt.grid()
+        plt.show()
+        return None
+
+    def subset_analysis(self, subset_sizes=[5,15,30], uncertainty=0.27e-2):
+        for j in subset_sizes:
+            subsets = np.split(self.gravity_array, self.length/j)
+            means = np.array([np.mean(subset) for subset in subsets])
+            std_errs = np.array([np.std(subset)/np.sqrt(self.length)
+                                 for subset in subsets])
+            up_low_lims = confidence_interval(uncertainty,
+                                              self.length-1,
+                                              means, std_errs)
+            yield {'means': means, 'std_errs': std_errs, 'up_low_lims': up_low_lims}
+
+    def means_chart(self, subset_sizes=[5,15,30], **kwargs):
+        subset_sizes = np.asarray(subset_sizes)
+        fig, axs = plt.subplots(1, len(subset_sizes), constrained_layout=True, figsize=(14,4))
+
+        for j, stats in enumerate(self.subset_analysis(subset_sizes, **kwargs)):
+            data_scope = np.arange(self.length/subset_sizes[j])
+            axs[j].axhline(y=9.77, color='k', linestyle='--')
+
+            # t-student correction to confidence intervals
+            axs[j].errorbar(data_scope+0.175, stats['means'],
+                            yerr=stats['up_low_lims'],
+                            fmt='.', color='k', ecolor='k', capsize=1.5)
+
+            # 1 standard error
+            axs[j].errorbar(data_scope-0.175, stats['means'],
+                            yerr=stats['std_errs'],
+                            fmt='.', color='dimgrey', ecolor='dimgrey', capsize=1.5)
+
+            # 3 standard errors
+            axs[j].errorbar(data_scope, stats['means'],
+                            yerr=3*stats['std_errs'],
+                            fmt='.', color='slategrey', ecolor='slategrey', capsize=1.5)
+
+            ticks = [f'Group {int(i)+1}' for i in data_scope]
+            axs[j].set_xticks(data_scope, ticks)
+            axs[j].set_title(f'{int(max(data_scope))+1} groups with {subset_sizes[j]} values')
+
+        plt.show()
+        return None
+
+    def percent_error(self, **kwargs):
+        for stats in self.subset_analysis(**kwargs):
+            percent_errors = np.abs(9.77 - stats['means'])/9.77
+            yield percent_errors
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[118]:
+:end:
+
+#+begin_src ipython :session asession :results raw drawer
+times_array = np.array([0.600,0.550,0.567,0.567,0.533,0.567,0.567,0.533,0.567,0.567,
+                        0.533,0.567,0.567,0.533,0.533,0.567,0.567,0.567,0.567,0.567,
+                        0.567,0.633,0.567,0.567,0.567,0.567,0.567,0.567,0.567,0.567])
+data = GravityMeasurements(times_array, 1.5)
+data.means_chart()
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[119]:
+[[file:./obipy-resources/3JFjUt.svg]]
+:end:
+
+#+begin_src ipython :session asession :results raw drawer
+for d in data.percent_error(subset_sizes=[5,15,30], uncertainty=0.27e-2):
+    print(d)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[120]:
+:end:
+
+#+begin_src ipython :session asession :results raw drawer
+times_array = np.array([0.61,0.51,0.50,0.49,0.47,0.5,0.51,0.46,0.44,0.56,
+                  0.53,0.5,0.53,0.52,0.51,0.48,0.46,0.5,0.47,0.5,
+                  0.46,0.53,0.52,0.50,0.51,0.54,0.56,0.53,0.47,0.47])
+data = GravityMeasurements(datos, 1.8)
+data.means_chart()
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[121]:
+[[file:./obipy-resources/2QSImS.svg]]
+:end:

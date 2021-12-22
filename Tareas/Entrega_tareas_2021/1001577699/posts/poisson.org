@@ -1,0 +1,210 @@
+#+TITLE: Poisson distribution applied to a counting experiment
+
+Standard libraries for data analysis:
+#+begin_src ipython :session asession :results raw drawer
+%config InlineBackend.figure_format = 'svg'
+
+import numpy as np
+from scipy import stats
+import matplotlib.pyplot as plt
+plt.rc('axes', axisbelow=True)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[1]:
+:end:
+
+During one of our lectures, the professor put forth the idea of counting the
+amount of objects passing through a certain reference point per unit time. The
+outcome of this experiment should presumably be random, and should obviously be
+in line with the conditions for a random variable to be described by the Poisson
+distribution, namely,
+
+1) we measure the number of events or successes within an allegedly continuous interval.
+
+2) the probability that a stipulated outcome occur in a specified interval is
+   proportional to the size of such an interval, which implies that the
+   probability that a success be seen in a sufficiently small interval becomes
+   negligible.
+
+It is relatively reasonable to assume that the professor's experiment abides by
+these few rules; after all, it appears as though the number of cars passing by, or the
+number of pedestrians on the pavement of a lonely street in an interval of one
+minute are fairly random things, occuring in a supposedly continous interval of time.
+
+I thus counted the number of vehicles passing by the street outside my own
+window pane and registered digitally thereafter:
+#+begin_src ipython :session asession :results raw drawer
+cars_per_minute = np.array([2,5,0,2,3,1,1,2,1,3,
+                            0,2,0,4,1,1,0,1,3,1,
+                            1,2,0,1,1,3,1,2,1,5,
+                            2,1,1,4,1,0,0,1,2,1,
+                            2,1,3,4,1,0,3,2,0,3,
+                            2,0,2,2,2,3,3,4,4,1])
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[2]:
+:end:
+
+The following code enables the procedure specified on the guide to this
+experiment. I firstly introduce a decorator function (label) whose only purpose
+is to modify the label entries on each produced chart; what followis is are the
+actual methods that were required for the activity: I produce different plots
+pertaining to both the registered data and a randomly simulated dataset
+approximately following a Poisson distribution.
+#+begin_src ipython :session asession :results raw drawer
+def label(function):
+    def wrapper(*args, xlabel='Event', ylabel='Frequency'):
+        plt.xlabel(xlabel)
+        plt.ylabel(ylabel)
+        function(*args)
+    return wrapper
+
+class Poisson:
+    def __init__(self, dataset):
+       self.dataset = np.asarray(dataset)
+       self.length = len(self.dataset)
+
+       # Simulated Poisson data
+       self.mean = np.mean(self.dataset)
+       self.poisson_data = stats.poisson.rvs(self.mean, size=self.length)
+       self.poisson_mean = np.mean(self.poisson_data)
+
+       # Frequencies
+       self.event, self.frequency = np.unique(self.dataset, return_counts=True)
+       self.poisson_event, self.poisson_frequency = np.unique(self.poisson_data,
+                                                              return_counts=True)
+
+    @label
+    def scatter_plot(self):
+        plt.scatter(np.arange(self.length), self.dataset, edgecolors='k',
+                    color='gainsboro', label='Registered data')
+        plt.scatter(np.arange(self.length), self.poisson_data, edgecolors='k',
+                    color='dimgrey', label='Simulatied data')
+        plt.grid()
+        plt.legend(loc='best')
+        plt.show()
+        return None
+
+    @label
+    def histogram(self, barwidth=0.35):
+        normalised_freq = self.frequency/self.length
+        normalised_freq_poisson = self.poisson_frequency/self.length
+
+        # Histograms
+        plt.bar(self.event, normalised_freq, barwidth, edgecolor='k',
+                color='gainsboro', label='Registered data')
+        plt.bar(self.poisson_event + barwidth, normalised_freq_poisson,
+                barwidth, edgecolor='k', color='dimgrey',
+                label='Simulated data')
+
+        # Poisson distribution
+        domain = np.arange(0, max(self.event)+1)
+        poisson = stats.poisson.pmf(domain, self.mean)
+        plt.plot(domain + .5*barwidth, poisson, 'ko--',
+                 label='Poisson distribution')
+
+        plt.xticks(self.event + .5*barwidth, tuple(self.event))
+        plt.grid()
+        plt.legend(loc='best')
+        plt.show()
+        return None
+
+    @label
+    def residuals(self):
+        differences = self.dataset - self.mean
+        poisson_differences = self.poisson_data - self.poisson_mean
+        domain = np.arange(self.length)
+
+        plt.scatter(domain, differences, edgecolors='k',
+                    color='gainsboro', label='Registered data')
+        plt.scatter(domain, poisson_differences, edgecolors='k',
+                    color='dimgrey', label='Simulated data')
+        plt.plot(domain, np.zeros((self.length,)), 'k--')
+        plt.grid()
+        plt.legend(loc='best')
+        plt.show()
+        return None
+
+    def compute_probability(self, low=2, up=5):
+        probability = np.sum(self.frequency[low:up+1])/self.length
+        poisson_prob = np.sum(self.poisson_frequency[low:up+1])/self.length
+        return probability, poisson_prob
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[143]:
+:end:
+
+#+begin_src ipython :session asession :results raw drawer
+stat = Poisson(cars_per_minute)
+# Mean value of the experiment
+stat.mean
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[151]:
+: 1.75
+:end:
+
+#+begin_src ipython :session asession :results raw drawer
+stat.scatter_plot()
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[145]:
+[[file:./obipy-resources/syaIDV.svg]]
+:end:
+
+Even though the data is distibuted in a seemingly random manner, these datasets
+appear to have significant accumulations of points around the values 2 cars/min
+and 1 car/min, or thereabouts; which is of course consistent with the fact that
+the mean value must be around 1.75 cars/min.
+
+#+begin_src ipython :session asession :results raw drawer
+stat.residuals(xlabel='Minute', ylabel='Standardised residual')
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[146]:
+[[file:./obipy-resources/ppXx9q.svg]]
+:end:
+
+The standardised residuals here are defied as the observed value, minus the
+expected value (the mean). These values should theoretically distribute
+themselves in a random way around zero (provided our experiment was indeed
+random), whcih is apparently what happens in this case, though there appear to
+be some accumulation values around -1 and slightly above 0.
+
+#+begin_src ipython :session asession :results raw drawer
+stat.histogram(xlabel='Cars per minute', ylabel='Frequency')
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[147]:
+[[file:./obipy-resources/695jfP.svg]]
+:end:
+
+The data I collected from the car-counting expriment appears to be in good
+correspondence with the expected values from the Poisson distribution, while the
+simulated values are in accordance therewith to varying extents, depending on
+the randomly generated dataset, of course.
+
+#+begin_src ipython :session asession :results raw drawer
+observed, simulated = stat.compute_probability(low=2, up=5)
+{'observed': observed, 'simulated': simulated}
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[149]:
+: {'observed': 0.5, 'simulated': 0.55}
+:end:

@@ -13,7 +13,28 @@ import numpy.linalg as la
 
 #+RESULTS:
 :results:
-# Out[1]:
+# Out[8]:
+:end:
+#+begin_src ipython :session asession :results raw drawer :exports both
+def position(t):
+    x = 0.64*(np.sin(16.33*t) - np.exp(-5*t)*np.sin(15.54*t))
+    return x
+
+def steady_state(t):
+    x = 0.64*np.sin(16.33*t)
+    return x
+
+t_domain = np.linspace(0, 5, 1000)
+plt.plot(t_domain, position(t_domain), 'k-', label='General')
+plt.plot(t_domain, steady_state(t_domain), 'b--', label='Steady state')
+plt.legend()
+plt.grid()
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[10]:
+[[file:./obipy-resources/RiSLoU.svg]]
 :end:
 
 * Numerical evaluation of ODEs in python
