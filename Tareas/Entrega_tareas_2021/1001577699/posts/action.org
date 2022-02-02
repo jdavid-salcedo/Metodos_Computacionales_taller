@@ -1,7 +1,7 @@
 #+TITLE: Application of the Principle of Least Action
-#+SETUPFILE: ~/Desktop/Metodos_Computacionales_taller/Tareas/Entrega_tareas_2021/1001577699/org-html-themes/org/theme-readtheorg-local.setup
+#+SETUPFILE: ~/Personal/github_repos/Metodos_Computacionales_taller/Tareas/Entrega_tareas_2021/1001577699/org-html-themes/org/theme-readtheorg-local.setup
 
-#+begin_src ipython :session asession :results raw drawer
+#+begin_src jupyter-python :session python :async yes :results raw drawer
 %config InlineBackend.figure_format = 'svg'
 
 import numpy as np
@@ -9,31 +9,29 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import scipy.integrate as integrate
 from scipy.optimize import fmin_powell
-#+end_src
+#+END_SRC
 
 #+RESULTS:
 :results:
-# Out[486]:
 :end:
 
 * Simple pendulum problem
 
 We have a pendulum with a certain bob of mass $m$, and whose period is given, we
 wish to find the trajectory of the bob using Lagrangians
-#+begin_src ipython :session asession :results raw drawer
+#+begin_src jupyter-python :session python :async yes :results raw drawer
 th_f = np.deg2rad(10)
-#+end_src
+#+END_SRC
 
 #+RESULTS:
 :results:
-# Out[487]:
 :end:
 
 We define the lagrangian of the system, which is equal to the quantity
 $\mathcal{L} = K - U$, and sum it over discrete paths to get their action. The
 action function takes an $n$-tuple and returns a single number, thus we need to
 minimize a funtion from $\mathbb{R}^n$ to $\mathbb{R}$.
-#+begin_src ipython :session asession :results raw drawer :exports both
+#+begin_src jupyter-python :session python :async yes :results raw drawer
 def action(thetas, theta_0=0, theta_f=th_f, t_f=0.5026, m=0.2, l=1, g=9.8):
     ''' The lagrangian defines a function from Rn to R,
     which takes possible discrete n-paths as inputs
@@ -60,14 +58,13 @@ action([1,2,3,4])
 
 #+RESULTS:
 :results:
-# Out[488]:
 : 7.238087883494
 :end:
 
 The object's path is the $n$-tuple that minimises the action function.
-#+begin_src ipython :session asession :results raw drawer :exports both
+#+begin_src jupyter-python :session python :async yes :results raw drawer
 def path(N, theta_0=0, theta_f=th_f):
-    thetas = fmin_powell( action, x0=np.zeros(int(N)) )
+    thetas = fmin_powell(action, x0=np.zeros(int(N)), disp=False)
     # fix the boundary
     thetas[0], thetas[-1] = theta_0, theta_f
     return thetas
@@ -77,26 +74,23 @@ path(50)
 
 #+RESULTS:
 :results:
-# Out[489]:
-#+BEGIN_EXAMPLE
-  array([0.        , 0.00559656, 0.01118722, 0.01676634, 0.02232795,
-  0.02786655, 0.03337642, 0.03885188, 0.04428761, 0.0496777 ,
-  0.05501686, 0.06029933, 0.06551943, 0.07067203, 0.07575125,
-  0.08075244, 0.08567029, 0.09049991, 0.09523704, 0.09987613,
-  0.10441326, 0.10884293, 0.11316026, 0.11736117, 0.12143981,
-  0.12539355, 0.1292177 , 0.13290898, 0.1364654 , 0.13988156,
-  0.14315608, 0.1462835 , 0.14925956, 0.1520823 , 0.15474516,
-  0.15724911, 0.159591  , 0.16176904, 0.16378597, 0.16563478,
-  0.16731596, 0.16882544, 0.170156  , 0.17131196, 0.17228901,
-  0.17309303, 0.17372212, 0.17417115, 0.17444151, 0.17453293])
-#+END_EXAMPLE
+: array([0.        , 0.00559656, 0.01118721, 0.01676633, 0.02232795,
+:        0.02786655, 0.03337641, 0.03885188, 0.04428761, 0.0496777 ,
+:        0.05501686, 0.06029932, 0.06551943, 0.07067203, 0.07575125,
+:        0.08075244, 0.08567028, 0.09049991, 0.09523704, 0.09987613,
+:        0.10441326, 0.10884293, 0.11316026, 0.11736117, 0.12143981,
+:        0.12539355, 0.1292177 , 0.13290898, 0.1364654 , 0.13988156,
+:        0.14315608, 0.1462835 , 0.14925956, 0.1520823 , 0.15474516,
+:        0.15724911, 0.159591  , 0.16176904, 0.16378597, 0.16563478,
+:        0.16731596, 0.16882544, 0.170156  , 0.17131196, 0.17228901,
+:        0.17309303, 0.17372212, 0.17417115, 0.17444151, 0.17453293])
 :end:
 
 From mechanics, we know that the angular speed of the pedulum is given by the
 formula $\omega = 2\pi/T$, where $T$ is the pendulum's period. In turn, assuming
 small oscillations:
 \[ T = 2\pi\sqrt{\frac{L}{g}} \]
-#+begin_src ipython :session asession :results raw drawer :exports both
+#+begin_src jupyter-python :session python :async yes :results raw drawer
 def graph(t_f=0.5026, m=0.2, l=1, theta_f=th_f, N=50, g=9.8):
     T = lambda l : 2*np.pi*np.sqrt(l/g)
     time_domain = np.linspace(0, t_f, N)
@@ -116,15 +110,15 @@ def plot(graph):
 @plot
 def _graph():
     return graph()
+
 _graph
 #+end_src
 
 #+RESULTS:
 :results:
-# Out[490]:
-[[file:./obipy-resources/pOaG01.svg]]
+[[file:./.ob-jupyter/2f8538e051c53a643ea5bc02c96bb050dd06d5fa.svg]]
 :end:
-#+begin_src ipython :session asession :results raw drawer :exports both
+#+begin_src jupyter-python :session python :async yes :results raw drawer
 def energy(m=0.2, l=1, g=9.8):
     _t, path, expected_path = graph()
     angular_speed = np.diff(path)/np.diff(_t)
@@ -143,8 +137,7 @@ energy()
 
 #+RESULTS:
 :results:
-# Out[491]:
-[[file:./obipy-resources/crRAXq.svg]]
+[[file:./.ob-jupyter/699e44b7766c82db391f230251246c381986507d.svg]]
 :end:
 
 * Mass attached to a spring
@@ -153,7 +146,7 @@ We wish to use lagrangian mechanics to characterize a system consisting of a mas
 We know the time it takes for the spring to complete an oscillation.
 
 As before, we must define the action, which is the integral of the lagrangian, as a function of possible $n$-paths consisting of an array of possible positions.
-#+begin_src ipython :session asession :results raw drawer :exports both
+#+begin_src jupyter-python :session python :async yes :results raw drawer
 def _action(x, x_0=0.707106, x_f=0.707106, t_0=np.pi/8, t_f=3*np.pi/8, m=0.2, k=0.8):
     ''' The lagrangian defines a function from Rn to R,
     which takes possible discrete n-paths as inputs
@@ -181,12 +174,12 @@ _action([1,2,3,4])
 
 #+RESULTS:
 :results:
-# Out[492]:
 : 3.986249271332106
 :end:
-#+begin_src ipython :session asession :results raw drawer :exports both
+
+#+begin_src jupyter-python :session python :async yes :results raw drawer
 def _path(N, x_0=0.707106, x_f=0.707106):
-    x = fmin_powell( _action, x0=np.zeros(int(N)) )
+    x = fmin_powell(_action, x0=np.zeros(int(N)), disp=False)
     # fix the boundary
     x[0], x[-1] = x_0, x_f
     return x
@@ -196,23 +189,22 @@ _path(51)
 
 #+RESULTS:
 :results:
-# Out[493]:
-#+BEGIN_EXAMPLE
-  array([0.707106  , 0.72896324, 0.74992768, 0.77043328, 0.79009548,
-  0.80897771, 0.82703792, 0.84429362, 0.86070009, 0.87626238,
-  0.89095823, 0.90477491, 0.91770246, 0.92972336, 0.94083031,
-  0.95100818, 0.96024932, 0.96854261, 0.97588024, 0.98225472,
-  0.98766077, 0.99209205, 0.99554648, 0.99801834, 0.9995034 ,
-  1.00000198, 0.99951   , 0.99803155, 0.99557785, 0.99214158,
-  0.98772744, 0.98233857, 0.9759515 , 0.96860117, 0.96031583,
-  0.95108267, 0.9409571 , 0.92990286, 0.9178419 , 0.90487507,
-  0.89099313, 0.87623182, 0.86077175, 0.84446213, 0.82722866,
-  0.80917875, 0.79019668, 0.77043472, 0.75007153, 0.72894849,
-  0.707106  ])
-#+END_EXAMPLE
+#+begin_example
+array([0.707106  , 0.72896325, 0.74992769, 0.77043329, 0.79009548,
+       0.80897772, 0.82703792, 0.84429362, 0.86070009, 0.87626238,
+       0.89095822, 0.9047749 , 0.91770245, 0.92972336, 0.9408303 ,
+       0.95100818, 0.96024931, 0.9685426 , 0.97588023, 0.98225472,
+       0.98766076, 0.99209205, 0.99554648, 0.99801834, 0.99950339,
+       1.00000197, 0.99951   , 0.99803155, 0.99557784, 0.99214157,
+       0.98772743, 0.98233857, 0.9759515 , 0.96860116, 0.96031583,
+       0.95108267, 0.9409571 , 0.92990285, 0.9178419 , 0.90487507,
+       0.89099313, 0.87623182, 0.86077174, 0.84446212, 0.82722865,
+       0.80917874, 0.79019668, 0.77043472, 0.75007153, 0.72894848,
+       0.707106  ])
+#+end_example
 :end:
 
-#+begin_src ipython :session asession :results raw drawer :exports both
+#+begin_src jupyter-python :session python :async yes :results raw drawer
 def graph(t_0=np.pi/8, t_f=3*np.pi/8, m=0.2, k=0.8, x_0=0.707106, x_f=0.707106, N=50, g=9.8):
     time_domain = np.linspace(t_0, t_f, N)
     ang_speed = np.sqrt(k/m)
@@ -237,11 +229,10 @@ _graph
 
 #+RESULTS:
 :results:
-# Out[494]:
-[[file:./obipy-resources/yPSUVs.svg]]
+[[file:./.ob-jupyter/9e9b3a9fe3379ed9cb48981144eecc347cefa22e.svg]]
 :end:
 
-#+begin_src ipython :session asession :results raw drawer :exports both
+#+begin_src jupyter-python :session python :async yes :results raw drawer
 def energy(m=0.2, k=0.8):
     _t, path, expected_path = graph()
     speed = np.diff(path)/np.diff(_t)
@@ -260,10 +251,10 @@ energy()
 
 #+RESULTS:
 :results:
-# Out[495]:
-[[file:./obipy-resources/GEkU9L.svg]]
+[[file:./.ob-jupyter/c92448f663537d3e4b63364fdedaf5512265519f.svg]]
 :end:
-#+begin_src ipython :session asession :results raw drawer :exports both
+
+#+begin_src jupyter-python :session python :async yes :results raw drawer
 def position_derivatives(m=0.2, k=0.8):
     _t, path, expected_path = graph()
     dt = np.diff(_t)
@@ -284,13 +275,13 @@ position_derivatives()
 
 #+RESULTS:
 :results:
-# Out[496]:
-[[file:./obipy-resources/g99Pi1.svg]]
+[[file:./.ob-jupyter/80ac518bbdd6e186cdc0f27e7e56b728efbeda2c.svg]]
 :end:
 
 * Generalisation
 We can define a class for this whole process:
-#+begin_src ipython :session asession :results raw drawer
+
+#+begin_src jupyter-python :session python :async yes :results raw drawer
 class Lagrangian:
     ''' Minimises the action of a specified system and returns the
     corresponding path
@@ -334,7 +325,7 @@ class Lagrangian:
     def path(self, N, args=()):
         ''' Returns the N-path minimising the action '''
         # minimize the action
-        path = fmin_powell( self.action, x0=np.zeros(int(N)), args=args )
+        path = fmin_powell(self.action, x0=np.zeros(int(N)), args=args, disp=False)
 
         # fix the boundary
         path[0], path[-1] = self.path_ini, self.path_end
@@ -373,12 +364,11 @@ class Lagrangian:
 
 #+RESULTS:
 :results:
-# Out[497]:
 :end:
 
 We can make use of this newly defined class by defining the functions that
 characterise the system's behaviour, and processing them accordingly.
-#+begin_src ipython :session asession :results raw drawer :exports both
+#+begin_src jupyter-python :session python :async yes :results raw drawer
 # The pendulum problem
 def kinetic(speed, m=1, g=9.8, L=1):
     return 0.5*m*(L*speed)**2
@@ -403,15 +393,13 @@ system.plot(50, energy_args=(1, 9.8, 1),
 
 #+RESULTS:
 :results:
-# Out[498]:
-[[file:./obipy-resources/82DvTx.svg]]
+[[file:./.ob-jupyter/0c1d0b7970981cc85f90508430a6315a44eb15aa.svg]]
 :end:
 
 As before, we can build up the energy plot, so as to prove that it is conserved:
-#+begin_src ipython :session asession :results raw drawer :exports both
+#+begin_src jupyter-python :session python :async yes :results raw drawer
 def energy(m=0.2, L=1, g=9.8) :
-    # get the graph of both the expected function
-    # and the minimised one
+    # get the graph of both the expected function and the minimised one
     _t, path, expected_path = system.graph(50)
     angular_speed = np.diff(path)/np.diff(_t)
 
@@ -430,11 +418,11 @@ energy()
 
 #+RESULTS:
 :results:
-# Out[499]:
-[[file:./obipy-resources/vBBCSp.svg]]
+[[file:./.ob-jupyter/9f8a569ccce6c154da0ccbbc55105e5c2c35be04.svg]]
 :end:
+
 Similarly:
-#+begin_src ipython :session asession :results raw drawer :exports both
+#+begin_src jupyter-python :session python :async yes :results raw drawer
 # The spring problem
 def kinetic(speed, m=0.2, k=0.8):
     return 0.5*m*speed**2
@@ -457,6 +445,5 @@ system.plot(50, energy_args=(0.2, 0.8),
 
 #+RESULTS:
 :results:
-# Out[500]:
-[[file:./obipy-resources/zj3Gg0.svg]]
+[[file:./.ob-jupyter/3a6e1c3d6ff5f04ad5bcd141fdb7734c417b0a34.svg]]
 :end:

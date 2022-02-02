@@ -1,0 +1,351 @@
+#+TITLE: Linear regression activity
+#+PROPERTY: header-args:jupyter-python :session asession
+#+PROPERTY: header-args:jupyter-python+ :async yes
+#+PROPERTY: header-args:jupyter-python+ :results raw drawer
+
+Standard libraries for data analysis:
+#+begin_src jupyter-python
+%config InlineBackend.figure_format = 'svg'
+
+import numpy as np
+import pandas as pd
+from scipy import stats
+from scipy import optimize
+import matplotlib.pyplot as plt
+plt.rc('axes', axisbelow=True)
+#+end_src
+
+#+RESULTS:
+:results:
+:end:
+
+I've set out to analyse the dataset shown below. This set consists of different
+values of the prediction offered by a computer vision system with respect to the visual
+quality of the human eye. The column labelled ~'AO'~ represents the objective
+acuity, whereas the ~'AO'~ column represents the visual acuity measured in a
+group of selected patients. The additional column ~'eAV'~ contains the
+experimental errors in the ~'AV'~ values.
+#+begin_src jupyter-python
+dataset = {'AO': [-0.36,-0.26,-0.26,-0.26,-0.21,-0.16,-0.16,-0.11,-0.01,-0.01,0.04,0.09,0.09,0.15,0.29,0.30,0.30,0.34,0.34,0.39,0.49,0.54],
+           'AV': [-0.06,-0.01,0.04,0.05,0.12,0.11,0.19,0.06,0.14,0.23,0.18,0.24,0.07,0.21,0.38,0.51,0.22,0.37,0.31,0.23,0.47,0.56],
+           'eAV': [0.02,0.03,0.08,0.07,0.06,0.08,0.04,0.05,0.09,0.07,0.07,0.10,0.06,0.07,0.15,0.11,0.09,0.06,0.06,0.07,0.15,0.13]}
+dataset = pd.DataFrame(dataset)
+dataset
+#+end_src
+
+#+RESULTS:
+:results:
+#+begin_example
+      AO    AV   eAV
+0  -0.36 -0.06  0.02
+1  -0.26 -0.01  0.03
+2  -0.26  0.04  0.08
+3  -0.26  0.05  0.07
+4  -0.21  0.12  0.06
+5  -0.16  0.11  0.08
+6  -0.16  0.19  0.04
+7  -0.11  0.06  0.05
+8  -0.01  0.14  0.09
+9  -0.01  0.23  0.07
+10  0.04  0.18  0.07
+11  0.09  0.24  0.10
+12  0.09  0.07  0.06
+13  0.15  0.21  0.07
+14  0.29  0.38  0.15
+15  0.30  0.51  0.11
+16  0.30  0.22  0.09
+17  0.34  0.37  0.06
+18  0.34  0.31  0.06
+19  0.39  0.23  0.07
+20  0.49  0.47  0.15
+21  0.54  0.56  0.13
+#+end_example
+:end:
+
+The values identified with ~'AO'~ and ~'AV'~ are allegedly correlated in a
+linear manner; we should therefore define a method (in this case a class) with
+which to solve the problem of optimising the parameter values of a straight line
+in the plane, so as to effectively represent the trend of our data, thereby
+specifying an estimation of the way in which the experimental variables may be
+for correlated for observations of the studied phenomenon.
+#+begin_src jupyter-python
+def stdev(xdata, ydata, slope, intercept, n):
+    sum_differences_squared = sum((ydata - (slope*xdata + intercept))**2)
+    stdev = np.sqrt(sum_differences_squared/(n-2))
+    return stdev
+
+def stdev_mean(xdata, ydata, slope, intercept, n):
+    st_dev = stdev(xdata, ydata, slope, intercept, n)
+    stdev_mean = st_dev/np.sqrt(n)
+    return stdev_mean
+
+class LinearRegression:
+    def __init__(self, xdata, ydata, yerror, tags=None):
+        self.x = xdata
+        self.y = ydata
+        self.n = xdata.count()
+        self.yerror = yerror
+        self.xtag = tags[0]
+        self.ytag = tags[1]
+
+    def correlation(self):
+        return np.corrcoef(self.x, self.y)
+
+    def scatter_plot(self, fit=False, method=None):
+        ''' method = ['curve_fit', 'naive']
+        '''
+        cm = 1/2.54
+        fig, ax = plt.subplots(1, figsize=(15*cm, 10*cm))
+
+        ax.grid(visible=True, which='major', color='#666666', linestyle='--',
+                alpha=0.3)
+        ax.set(xlabel=r'{}'.format(self.xtag), ylabel=r'{}'.format(self.ytag))
+        ax.errorbar(self.x, self.y, yerr=self.yerror, fmt='ok', markersize=3,
+                    capsize=2)
+
+        methods = ['curve_fit', 'naive']
+        if not fit:
+            plt.show()
+
+        elif fit and method not in methods:
+            raise(ValueError('No specified method'))
+
+        elif fit and method == methods[0]:
+            optimal_params, cov_matrix = optimize.curve_fit(
+                lambda i,m,c : m*i + c, self.x, self.y, sigma=self.yerror)
+
+            slope, intercept = optimal_params
+            delta_slope, delta_intercept = np.sqrt(np.diag(cov_matrix))
+            predicted_y = slope*self.x + intercept
+
+            differences = self.y - predicted_y
+            st_dev_mean = stdev_mean(self.x, self.y, slope, intercept, self.n)
+
+            ax.plot(self.x, predicted_y, 'k-', label='Regression using library method')
+            ax.legend()
+            plt.show()
+
+            summary = {'Slope': slope, 'Intercept': intercept, 'Delta slope':
+                       delta_slope, 'Delta intercept': delta_intercept,
+                       'Stdev. mean': st_dev_mean}
+            return summary, differences
+
+        elif fit and method == methods[1]:
+            sum_x = sum(self.x)
+            sum_x_sqr = sum(self.x**2)
+            sum_y = sum(self.y)
+            sum_xy = sum(self.x * self.y)
+
+            denominator = self.n*sum_x_sqr - sum_x**2
+            intercept = (sum_x_sqr*sum_y - sum_x*sum_xy)/denominator
+            slope = (self.n*sum_xy - sum_x*sum_y)/denominator
+            predicted_y = slope*self.x + intercept
+
+            differences = self.y - predicted_y
+            st_dev_mean = stdev_mean(self.x, self.y, slope, intercept, self.n)
+
+            delta_slope = np.sqrt(self.n*st_dev_mean**2/denominator)
+            delta_intercept = np.sqrt(sum_x_sqr*st_dev_mean**2/denominator)
+
+            predicted_y = slope*self.x + intercept
+            ax.plot(self.x, predicted_y, 'k-', label='Regression using naive method')
+            ax.legend()
+            plt.show()
+
+            summary = {'Slope': slope, 'Intercept': intercept, 'Delta slope':
+                       delta_slope, 'Delta intercept': delta_intercept,
+                       'Stdev. mean': st_dev_mean}
+            return summary, differences
+#+end_src
+
+#+RESULTS:
+:results:
+:end:
+
+I plot these datapoints to begin with, assuming that ~'AO'~ is the independent
+variable.
+#+begin_src jupyter-python
+visual_acuity = LinearRegression(dataset['AO'], dataset['AV'], dataset['eAV'], tags=['AO / logMAR', 'AV / logMAR'])
+visual_acuity.scatter_plot(fit=False)
+#+end_src
+
+#+RESULTS:
+:results:
+[[file:./.ob-jupyter/fe1bd66131096a42856aa4ef4c01939cbee72253.svg]]
+:end:
+
+Further, I use the 'naive' approach to curve fitting; as mentioned in the
+document, I take no notice of the experimental variances in ~'AV'~. The results
+are presented below.
+#+begin_src jupyter-python
+naive_fit, naive_fit_differences = visual_acuity.scatter_plot(fit=True, method='naive')
+pd.DataFrame(naive_fit, index=[0])
+#+end_src
+
+#+RESULTS:
+:results:
+[[file:./.ob-jupyter/09e82ac0025f00a104a0b0d729a6014662e0d995.svg]]
+:       Slope  Intercept  Delta slope  Delta intercept  Stdev. mean
+: 0  0.541781   0.171583     0.014022         0.003851     0.017451
+:end:
+
+Moreover, I present the regression line obtained by 'outsourcing' the
+minimisation problem to the good ol' scipy library (which I reckon is common
+practice amongst us students).
+#+begin_src jupyter-python
+library_fit, library_fit_differences = visual_acuity.scatter_plot(fit=True, method='curve_fit')
+pd.DataFrame(library_fit, index=[0])
+#+end_src
+
+#+RESULTS:
+:results:
+[[file:./.ob-jupyter/914e2b9dc64c39894b19bd63b05c94f39754278e.svg]]
+:       Slope  Intercept  Delta slope  Delta intercept  Stdev. mean
+: 0  0.534309   0.152716     0.056276         0.015936     0.017987
+:end:
+
+I may measure the results obtained by the naive method against what we've got
+from the scippy methods brought up above; I do this by using the usual relative
+error formula:
+\[ \text{Relative error} = \left| \frac{\text{observed} - \text{expected}}{\text{expected}} \right|; \]
+it may be worth clarifying that I assume the 'expected' result for the
+regression parameters to be the outcome of the scipy method.
+#+begin_src jupyter-python
+# these errors are percentage errors
+relative_error_slope = np.abs((naive_fit['Slope'] - library_fit['Slope'])/library_fit['Slope'])*100
+relative_error_intercept = np.abs((naive_fit['Intercept'] - library_fit['Intercept'])/library_fit['Intercept'])*100
+
+print(f'Relative error in slope values: {relative_error_slope:.2f} %')
+print(f'Relative error in intercept values: {relative_error_intercept:.2f} %')
+#+end_src
+
+#+RESULTS:
+:results:
+: Relative error in slope values: 1.40 %
+: Relative error in intercept values: 12.35 %
+:end:
+
+Furthermore, and as it has been required, I can find the correlation coefficient
+between the experimental variables, which is very easy to do here in python:
+#+begin_src jupyter-python
+visual_acuity.correlation()
+#+end_src
+
+#+RESULTS:
+:results:
+: array([[1.        , 0.87883728],
+:        [0.87883728, 1.        ]])
+:end:
+Here we need not be concerned with the principal diagonal of the matrix above,
+since its entries represent the correlations of ~'AO'~ with itself, and
+~'AV'~ with itself. We see that the variables have a correlation of roughly 87.9
+%; therefore, the computer vision system's prediction of visual acuity is adequate.
+
+Now I repeat the library procedure assuming that the experimental error in the
+values of ~'AV'~ are all equal to 0.02. Then I compare the results of the naive
+approach against these new results.
+#+begin_src jupyter-python
+modified_visual_acuity = LinearRegression(dataset['AO'], dataset['AV'], [0.02]*dataset.shape[0], tags=['AO', 'AV'])
+modified_library_fit = modified_visual_acuity.scatter_plot(fit=True, method='curve_fit')[0]
+pd.DataFrame(modified_library_fit, index=[0])
+#+end_src
+
+#+RESULTS:
+:results:
+[[file:./.ob-jupyter/be312848bc0b7f4966de175202fabc6cec8d2d1a.svg]]
+:       Slope  Intercept  Delta slope  Delta intercept  Stdev. mean
+: 0  0.541781   0.171583      0.06577         0.018063     0.017451
+:end:
+
+For these modified values we get:
+#+begin_src jupyter-python
+# these errors are percentage errors
+relative_error_slope = np.abs((naive_fit['Slope'] - modified_library_fit['Slope'])/modified_library_fit['Slope'])*100
+relative_error_intercept = np.abs((naive_fit['Intercept'] - modified_library_fit['Intercept'])/modified_library_fit['Intercept'])*100
+
+print(f'Relative error in slope values: {relative_error_slope:.2f} %')
+print(f'Relative error in intercept values: {relative_error_intercept:.2f} %')
+#+end_src
+
+#+RESULTS:
+:results:
+: Relative error in slope values: 0.00 %
+: Relative error in intercept values: 0.00 %
+:end:
+These relative errors are essentialy zero, which means that, in dismissing the
+errors during the library fit, we get approximately the same results as with the
+naive approach.
+
+Next, I would like to compare the statistical error, corresponding to the
+standard deviation of the mean, with the reported experimental uncertainty in
+the original dataset; here I take into consideration the standard deviation of
+the mean reported by the library operation. Once more, I use the percent error,
+assuming that the
+#+begin_src jupyter-python
+(100*(dataset['eAV'] - library_fit['Stdev. mean'])/dataset['eAV']).abs().max()
+#+end_src
+
+#+RESULTS:
+:results:
+: 88.0086301987452
+:end:
+Thus, the maximum relative error of the standard deviation with respect to the
+experimental error estimates is about 88 %; this suggests that the estimation of
+uncertainties was quite conservative, although not underestimating.
+
+Now we compare the errors reported in the naive approach against their
+counterparts in the library fit method. As before, I report the percent error
+between the values.
+#+begin_src jupyter-python
+delta_slope_error = 100*np.abs((naive_fit['Delta slope'] - library_fit['Delta slope'])/library_fit['Delta slope'])
+delta_intercept_error = 100*np.abs((naive_fit['Delta intercept'] - library_fit['Delta intercept'])/library_fit['Delta intercept'])
+
+print(f'Relative error in slope errors: {delta_slope_error:.2f} %')
+print(f'Relative error in intercept errors: {delta_intercept_error:.2f} %')
+#+end_src
+
+#+RESULTS:
+:results:
+: Relative error in slope errors: 75.08 %
+: Relative error in intercept errors: 75.83 %
+:end:
+Indeed, the errors reported by the naive fit is formidably underestimating, this
+is in some measure due to the fact that the uncertaities in the values of ~'AV'~
+are being overlooked, which compulsory implies that the estimates will be overly
+optimistic.
+
+Finally, we plot the residual charts for both the library method and the naive one.
+#+begin_src jupyter-python
+plt.scatter(visual_acuity.x, library_fit_differences, edgecolors='k',
+            color='dimgrey', label='Residuals for library method')
+plt.axhline(y=0, color='k', linestyle='--')
+plt.xlabel('AO')
+plt.ylabel('Difference')
+plt.legend()
+plt.grid()
+plt.show()
+#+end_src
+
+#+RESULTS:
+:results:
+[[file:./.ob-jupyter/23303db01eb68c45f5a4cc2babb66e15b45bcf89.svg]]
+:end:
+#+begin_src jupyter-python
+plt.scatter(visual_acuity.x, naive_fit_differences, edgecolors='k',
+            color='dimgrey', label='Residuals for naive method')
+plt.axhline(y=0, color='k', linestyle='--')
+plt.xlabel('AO')
+plt.ylabel('Difference')
+plt.legend()
+plt.grid()
+plt.show()
+#+end_src
+
+#+RESULTS:
+:results:
+[[file:./.ob-jupyter/c24fca80b2f7dace3c860985c95e94ce49605907.svg]]
+:end:
+The residuals' behaviour in both cases is very similar, and may be considered as
+randomly distributed about the zero value, though one actually sees that the
+differences tend to be larger as the value of ~'AO'~ increases, more data would
+be required to pin down this behaviour with complete confidence.
